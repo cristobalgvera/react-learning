@@ -1,0 +1,11 @@
+@use "partials/colors";
+
+.user-input {
+  color: colors.$secondary-color;
+  background: colors.$primary-color;
+}
+
+.user-output-p {
+  font-variant: all-small-caps;
+  font-size: larger;
+}
