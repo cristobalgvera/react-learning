@@ -1,35 +1,38 @@
-import React, {useState} from 'react';
-import './Person.css';
-import Radium from "radium";
+import React from 'react';
+import styled from "styled-components";
 
-// A stateless component is called a dump or presentational component.
-// It doesn't have logic.
+const StyledDiv = styled.div`
+    width: 60%;
+    margin: auto;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    padding: 16px;
+    text-align: center;
+                
+    @media (max-width: 768px) {
+        width: 40%;
+        background-color: lightblue;
+    }
+    `;
 
 const Person = ({id, age, name, changed, remove, children}) => {
-    const [style] = useState(
-        {
-            '@media (max-width: 768px)': {
-                width: '40%',
-                backgroundColor: 'lightblue'
-            }
-        }
-    )
-
     return (
-        <div className={"Person"} style={style}>
+        <StyledDiv>
             <p>
                 I'm {name} and I'm {age} years
             </p>
-            {children &&
-            <p>{children}</p>}
+            {
+                children &&
+                <p>{children}</p>
+            }
             <input
                 type={"text"}
                 onChange={(event) => changed(event, id)}
                 value={name}
             />
             <button onClick={() => remove()}>Remove</button>
-        </div>
+        </StyledDiv>
     );
 }
 
-export default Radium(Person);
+export default Person;

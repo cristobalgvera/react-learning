@@ -6,3 +6,10 @@
   padding: 16px;
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .Person {
+    width: 40%;
+    background-color: lightblue;
+  }
+}
