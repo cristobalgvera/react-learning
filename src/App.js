@@ -1,8 +1,7 @@
+import React, {useEffect, useState} from "react";
 import './App.css';
 import Person from "./Person/Person";
-import React, {useState} from "react";
-import FancyText from "./FancyText/FancyText";
-
+import Radium, {StyleRoot} from "radium";
 
 function App() {
     const [persons, setPersons] = useState(
@@ -14,6 +13,41 @@ function App() {
     );
 
     const [showPersonsList, setShowPersonsList] = useState(false);
+
+    const [classes, setClasses] = useState('');
+
+    const [style, setStyle] = useState(
+        {
+            backgroundColor: 'green',
+            color: 'white',
+            font: 'inherit',
+            border: '1px solid blue',
+            padding: '8px',
+            cursor: 'pointer'
+        }
+    )
+
+    useEffect(() => {
+        setStyle(prevState => (
+            {
+                ...prevState,
+                backgroundColor: showPersonsList ? 'red' : 'green',
+                ':hover': {
+                    backgroundColor: showPersonsList ? 'orange' : 'lightgreen',
+                    color: 'black'
+                }
+            }
+        ));
+    }, [showPersonsList]);
+
+    useEffect(() => {
+        setClasses(() => {
+            const _classes = [];
+            if (persons.length <= 2) _classes.push('red');
+            if (persons.length <= 1) _classes.push('bold');
+            return _classes.join(' ');
+        });
+    }, [persons.length]);
 
     const nameChangedHandler = ({target}, id) => {
         const personIndex = persons.findIndex(person => person.id === id);
@@ -49,26 +83,24 @@ function App() {
         );
     });
 
-    const style = {
-        backgroundColor: 'white',
-        font: 'inherit',
-        border: '1px solid blue',
-        padding: '8px',
-        cursor: 'pointer'
-    };
-
     return (
         <div className="App">
             {/*<User/>*/}
             {/*<FancyText/>*/}
             <h1>Hello, World from React!</h1>
-            <h2>This is an H2 tag</h2>
+            <p className={classes}>This is an paragraph tag</p>
             <button style={style} onClick={togglePersonsList}>
                 Toggle show persons
             </button>
-            {showPersonsList && listPersons()}
+            {
+                showPersonsList &&
+                <StyleRoot>
+                    {listPersons()}
+                </StyleRoot>
+            }
+
         </div>
     );
 }
 
-export default App;
+export default Radium(App);
