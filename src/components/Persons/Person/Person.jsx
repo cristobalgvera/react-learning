@@ -15,7 +15,7 @@ const StyledDiv = styled.div`
     }
     `;
 
-const Person = ({id, age, name, changed, remove, children}) => {
+const Person = ({id, age, name, changed, removed, children}) => {
     return (
         <StyledDiv>
             <p>
@@ -30,7 +30,7 @@ const Person = ({id, age, name, changed, remove, children}) => {
                 onChange={(event) => changed(event, id)}
                 value={name}
             />
-            <button onClick={() => remove()}>Remove</button>
+            <button onClick={() => removed()}>Remove</button>
         </StyledDiv>
     );
 }
