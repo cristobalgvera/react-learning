@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import styles from "../../containers/App.module.css";
+import AuthContext from "../../context/AuthContext";
 
 const StyledButton = styled.button`
   background-color: ${({ pressed }) => (pressed ? "red" : "green")};
@@ -20,6 +21,7 @@ const StyledButton = styled.button`
 const Cockpit = ({ show, toggle, personsLength }) => {
   const [classes, setClasses] = useState("");
   const styledButtonRef = useRef();
+  const { login } = useContext(AuthContext);
 
   useEffect(() => {
     setClasses(() => {
@@ -45,6 +47,7 @@ const Cockpit = ({ show, toggle, personsLength }) => {
       <StyledButton ref={styledButtonRef} pressed={show} onClick={toggle}>
         Toggle show persons
       </StyledButton>
+      <button onClick={login}>Log in</button>
     </>
   );
 };

@@ -5,6 +5,7 @@ import styles from "./App.module.css";
 import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
 import AddClass from "../hoc/AddClass";
+import AuthContext from "../context/AuthContext";
 
 function App() {
   const [persons, setPersons] = useState([
@@ -15,6 +16,7 @@ function App() {
 
   const [showPersonsList, setShowPersonsList] = useState(false);
   const [showCockpit, setShowCockpit] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
 
   const nameChangedHandler = ({ target }, id) => {
     const personIndex = persons.findIndex((person) => person.id === id);
@@ -37,25 +39,36 @@ function App() {
     setShowPersonsList((prevState) => !prevState);
   };
 
+  const loginHandler = () => setAuthenticated(true);
+
   return (
     // <div className={styles.App}>
     <>
       <button onClick={() => setShowCockpit((prevState) => !prevState)}>
         Toggle cockpit
       </button>
-      {showCockpit && (
-        <Cockpit
+      <AuthContext.Provider
+        value={{
+          authenticated: authenticated,
+          login: loginHandler,
+        }}
+      >
+        {showCockpit && (
+          <Cockpit
+            show={showPersonsList}
+            toggle={togglePersonsList}
+            personsLength={persons.length}
+            login={loginHandler}
+          />
+        )}
+        <Persons
+          persons={persons}
           show={showPersonsList}
-          toggle={togglePersonsList}
-          personsLength={persons.length}
+          removed={deletePersonHandler}
+          changed={nameChangedHandler}
+          isAuthenticated={authenticated}
         />
-      )}
-      <Persons
-        persons={persons}
-        show={showPersonsList}
-        removed={deletePersonHandler}
-        changed={nameChangedHandler}
-      />
+      </AuthContext.Provider>
     </>
     // </div>
   );
