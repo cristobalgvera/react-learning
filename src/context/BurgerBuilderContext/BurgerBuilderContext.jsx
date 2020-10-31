@@ -1,8 +1,9 @@
-import React from "react";
+import { createContext } from "react";
 
-const BurgerBuilderContext = () => ({
+const BurgerBuilderContext = createContext({
   addIngredient: () => {},
   removeIngredient: () => {},
+  disabledInfo: {},
 });
 
 export default BurgerBuilderContext;
