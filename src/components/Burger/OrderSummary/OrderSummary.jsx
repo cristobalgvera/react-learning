@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-import BurgerBuilderContext from "../../../context/BurgerBuilderContext/BurgerBuilderContext";
 import Button from "../../UI/Button/Button";
 
-const OrderSummary = ({ ingredients, price }) => {
-  const { closeModal } = useContext(BurgerBuilderContext);
-
+const OrderSummary = ({ close, ingredients, price }) => {
   const summary = Object.keys(ingredients).map((ingredient) => (
     <li key={ingredient}>
       <span style={{ textTransform: "capitalize" }}>{ingredient}</span>:{" "}
@@ -23,7 +20,7 @@ const OrderSummary = ({ ingredients, price }) => {
         <strong>TOTAL: ${price}</strong>
       </p>
       <p>Continue to checkout?</p>
-      <Button type={"Danger"} clicked={closeModal}>
+      <Button type={"Danger"} clicked={close}>
         CANCEL
       </Button>
       <Button
@@ -38,8 +35,9 @@ const OrderSummary = ({ ingredients, price }) => {
   );
 };
 
-const { shape, number } = PropTypes;
+const { func, shape, number } = PropTypes;
 OrderSummary.propTypes = {
+  close: func.isRequired,
   ingredients: shape({
     salad: number,
     bacon: number,

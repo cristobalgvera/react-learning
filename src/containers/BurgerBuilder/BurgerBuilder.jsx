@@ -6,6 +6,7 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import BurgerBuilderContext from "../../context/BurgerBuilderContext/BurgerBuilderContext";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
+import WillBeClickedContext from "../../context/WillBeClickedContext/WillBeClickedContext";
 
 const INGREDIENT_PRICES = {
   salad: 1000,
@@ -73,11 +74,15 @@ const BurgerBuilder = () => {
 
   return (
     <>
-      <BurgerBuilderContext.Provider value={{ closeModal: closePurchaseModal }}>
+      <WillBeClickedContext.Provider value={{ clicked: closePurchaseModal }}>
         <Modal show={purchasing}>
-          <OrderSummary ingredients={ingredients} price={price} />
+          <OrderSummary
+            ingredients={ingredients}
+            price={price}
+            close={closePurchaseModal}
+          />
         </Modal>
-      </BurgerBuilderContext.Provider>
+      </WillBeClickedContext.Provider>
       <Burger ingredients={ingredients} />
       <BurgerBuilderContext.Provider
         value={{
