@@ -4,6 +4,8 @@ import Burger from "../../components/Burger/Burger";
 
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import BurgerBuilderContext from "../../context/BurgerBuilderContext/BurgerBuilderContext";
+import Modal from "../../components/UI/Modal/Modal";
+import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 
 const INGREDIENT_PRICES = {
   salad: 1000,
@@ -16,6 +18,7 @@ const BurgerBuilder = () => {
   const [price, setPrice] = useState(2500);
   const [disabledButtonsInfo, setDisabledButtonsInfo] = useState({});
   const [purchasable, setPurchasable] = useState(false);
+  const [purchasing, setPurchasing] = useState(false);
   const [ingredients, setIngredients] = useState({
     salad: 0,
     bacon: 0,
@@ -60,8 +63,21 @@ const BurgerBuilder = () => {
     setPrice((prevState) => prevState - INGREDIENT_PRICES[ingredient]);
   };
 
+  const showPurchaseModal = () => {
+    setPurchasing(true);
+  };
+
+  const closePurchaseModal = () => {
+    setPurchasing(false);
+  };
+
   return (
     <>
+      <BurgerBuilderContext.Provider value={{ closeModal: closePurchaseModal }}>
+        <Modal show={purchasing}>
+          <OrderSummary ingredients={ingredients} price={price} />
+        </Modal>
+      </BurgerBuilderContext.Provider>
       <Burger ingredients={ingredients} />
       <BurgerBuilderContext.Provider
         value={{
@@ -70,7 +86,11 @@ const BurgerBuilder = () => {
           disabledInfo: disabledButtonsInfo,
         }}
       >
-        <BuildControls purchasable={purchasable} price={price} />
+        <BuildControls
+          purchasable={purchasable}
+          price={price}
+          summarize={showPurchaseModal}
+        />
       </BurgerBuilderContext.Provider>
     </>
   );

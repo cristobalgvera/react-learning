@@ -15,7 +15,7 @@ const controls = [
   { label: "Meat", ingredient: "meat" },
 ];
 
-const BuildControls = ({ price, purchasable }) => (
+const BuildControls = ({ price, purchasable, summarize }) => (
   <div className={BuildControlsClass}>
     <p>
       Price: <strong>${price}</strong>
@@ -23,16 +23,21 @@ const BuildControls = ({ price, purchasable }) => (
     {controls.map(({ ingredient, label }) => (
       <BuildControl key={label} label={label} ingredient={ingredient} />
     ))}
-    <button disabled={!purchasable} className={OrderButton}>
+    <button
+      disabled={!purchasable}
+      className={OrderButton}
+      onClick={() => summarize()}
+    >
       ORDER NOW
     </button>
   </div>
 );
 
-const { number, bool } = PropTypes;
+const { number, bool, func } = PropTypes;
 BuildControls.propTypes = {
   price: number.isRequired,
   purchasable: bool.isRequired,
+  summarize: func.isRequired,
 };
 
 export default BuildControls;
