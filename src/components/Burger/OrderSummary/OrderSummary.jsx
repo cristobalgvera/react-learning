@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import Button from "../../UI/Button/Button";
 
-const OrderSummary = ({ close, ingredients, price }) => {
+const OrderSummary = ({ purchase, close, ingredients, price }) => {
   const summary = Object.keys(ingredients).map((ingredient) => (
     <li key={ingredient}>
       <span style={{ textTransform: "capitalize" }}>{ingredient}</span>:{" "}
@@ -23,12 +23,7 @@ const OrderSummary = ({ close, ingredients, price }) => {
       <Button type={"Danger"} clicked={close}>
         CANCEL
       </Button>
-      <Button
-        type={"Success"}
-        clicked={() => {
-          alert("You purchase the burger, tasty!");
-        }}
-      >
+      <Button type={"Success"} clicked={() => purchase()}>
         CONTINUE
       </Button>
     </>
@@ -45,6 +40,7 @@ OrderSummary.propTypes = {
     meat: number,
   }).isRequired,
   price: number.isRequired,
+  purchase: func.isRequired,
 };
 
 export default OrderSummary;
