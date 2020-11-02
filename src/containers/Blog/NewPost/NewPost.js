@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "../../services/axios-jsonplaceholder";
+import axios from "../../../services/axios-jsonplaceholder";
 
 import "./NewPost.css";
 

@@ -1,70 +1,17 @@
-import React, { useEffect, useState } from "react";
-import axios from "../../services/axios-jsonplaceholder";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 
-import Posts from "../../components/Posts/Posts";
-import FullPost from "../../components/FullPost/FullPost";
-import NewPost from "../../components/NewPost/NewPost";
-import "./Blog.css";
-import BlogContext from "../../context/BlogContext/BlogContext";
+import "./Blog.scss";
+import Posts from "./Posts/Posts";
+import NewPost from "./NewPost/NewPost";
 
 const Blog = () => {
-  const [posts, setPosts] = useState([]);
-  const [activePost, setActivePost] = useState();
-  const [errorMessage, setErrorMessage] = useState();
-
-  useEffect(() => {
-    const getPosts = async () => {
-      try {
-        const response = await axios.get(`/posts`);
-        return response.data;
-      } catch ({ message }) {
-        console.log("[Blog.js | getPosts]", message);
-      }
-    };
-
-    getPosts()
-      .then((_posts) => {
-        _posts = _posts.slice(0, 4);
-        _posts.forEach((post) => (post.author = "Cristóbal"));
-        setPosts(_posts);
-      })
-      .catch(({ message }) => {
-        console.log(message);
-        setErrorMessage("Something went wrong :(");
-      });
-  }, []);
-
-  const postClickedHandler = (id) => {
-    setActivePost({ ...posts.find((post) => post.id === id) });
-  };
-
-  const removePostHandler = (id) => {
-    const postIndex = posts.findIndex((post) => post.id === id);
-    setPosts(([...prevState]) => {
-      prevState.splice(postIndex, 1);
-      return prevState;
-    });
-    setActivePost(null);
-  };
-
   return (
-    <div>
-      <section className="Posts">
-        <BlogContext.Provider value={{ clicked: postClickedHandler }}>
-          <Posts posts={posts} />
-        </BlogContext.Provider>
-        {errorMessage && (
-          <p>
-            <strong>{errorMessage}</strong>
-          </p>
-        )}
-      </section>
-      <section>
-        <FullPost post={activePost} remove={removePostHandler} />
-      </section>
-      <section>
-        <NewPost />
-      </section>
+    <div className="Blog">
+      <Switch>
+        <Route path="/new-post" component={NewPost} />
+        <Route path="/posts" component={Posts} />
+      </Switch>
     </div>
   );
 };
