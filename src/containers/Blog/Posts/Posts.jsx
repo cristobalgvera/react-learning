@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Route } from "react-router-dom";
+import { Link, Route, useRouteMatch } from "react-router-dom";
 import axios from "../../../services/axios-jsonplaceholder";
 
 import "./Posts.scss";
@@ -7,7 +7,8 @@ import "./Posts.scss";
 import Post from "../../../components/Post/Post";
 import FullPost from "../FullPost/FullPost";
 
-const Posts = ({ match: { url } }) => {
+const Posts = () => {
+  const { url } = useRouteMatch();
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {

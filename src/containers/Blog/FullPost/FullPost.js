@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "../../../services/axios-jsonplaceholder";
 
 import "./FullPost.css";
 
-const FullPost = ({
-  match: {
-    params: { id },
-  },
-}) => {
+const FullPost = () => {
+  const { id } = useParams();
   const [post, setPost] = useState();
 
   useEffect(() => {
@@ -26,7 +24,7 @@ const FullPost = ({
   }, [id]);
 
   const getInfo = () => {
-    if (post) {
+    if (post && id) {
       const { title, body, author } = post;
       return (
         <div className="FullPost">

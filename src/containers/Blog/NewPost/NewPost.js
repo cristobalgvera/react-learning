@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "../../../services/axios-jsonplaceholder";
 
 import "./NewPost.css";
 
 const NewPost = () => {
+  const history = useHistory();
   const [newPost, setNewPost] = useState({
     title: "",
     body: "",
@@ -13,6 +15,7 @@ const NewPost = () => {
   const newPostHandler = async () => {
     await axios.post(`/posts`, newPost).then((response) => {
       console.log(response);
+      history.push("/posts");
     });
   };
 
