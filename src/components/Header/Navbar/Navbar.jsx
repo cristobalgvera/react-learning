@@ -8,26 +8,27 @@ const Navbar = () => (
     <ul>
       <li>
         <NavLink
-          to="/posts"
+          to="/users"
           activeClassName="custom-active-style"
           activeStyle={{
             color: "red",
             textDecoration: "underline",
           }}
         >
-          Posts
+          Users
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/courses" activeClassName={`${active}`}>
+          Courses
         </NavLink>
       </li>
       <li>
         <NavLink
-          to={{
-            pathname: "/new-post",
-            hash: "#the-hash",
-            search: "?the-search=true",
-          }}
+          to={`/you-are-lost/${Math.floor(Math.random() * 100)}`}
           activeClassName={`${active}`}
         >
-          New Post
+          I wanna be lost
         </NavLink>
       </li>
     </ul>
