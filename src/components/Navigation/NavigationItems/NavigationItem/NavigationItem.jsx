@@ -3,21 +3,21 @@ import PropTypes from "prop-types";
 
 import {
   NavigationItem as NavigationItemStyle,
-  active as activeStyle,
+  active,
 } from "./NavigationItem.module.scss";
+import { NavLink } from "react-router-dom";
 
-const NavigationItem = ({ link, active, children }) => (
+const NavigationItem = ({ link, children }) => (
   <li className={NavigationItemStyle}>
-    <a href={link} className={active && activeStyle}>
+    <NavLink to={`${link}`} activeClassName={active}>
       {children}
-    </a>
+    </NavLink>
   </li>
 );
 
-const { string, bool } = PropTypes;
+const { string } = PropTypes;
 NavigationItem.propTypes = {
   link: string.isRequired,
-  active: bool,
 };
 
 export default NavigationItem;

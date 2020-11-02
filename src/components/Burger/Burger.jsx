@@ -7,14 +7,14 @@ import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 
 const Burger = ({ ingredients }) => {
   let ingredientsTags = Object.keys(ingredients)
-    .map((ingredient) => {
-      return [...Array(ingredients[ingredient])].map((_, i) => (
+    .map((ingredient) =>
+      [...Array(+ingredients[ingredient])].map((_, i) => (
         <BurgerIngredient
           key={`${ingredient}_${i}`}
           ingredient={capitalize(ingredient)}
         />
-      ));
-    })
+      ))
+    )
     .reduce((previous, current) => previous.concat(current), []);
 
   if (ingredientsTags.length === 0)

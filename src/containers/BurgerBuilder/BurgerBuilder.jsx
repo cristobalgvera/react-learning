@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../services/axios-orders";
+import qs from "querystring";
 
 import Burger from "../../components/Burger/Burger";
 
@@ -10,6 +11,7 @@ import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import WillBeClickedContext from "../../context/WillBeClickedContext/WillBeClickedContext";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import { useHistory } from "react-router-dom";
 
 const INGREDIENT_PRICES = {
   salad: 1000,
@@ -26,6 +28,7 @@ const BurgerBuilder = () => {
   const [loading, setLoading] = useState(false);
   const [ingredients, setIngredients] = useState();
   const [error, setError] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     setDisabledButtonsInfo(() => {
@@ -96,7 +99,6 @@ const BurgerBuilder = () => {
   };
 
   const purchaseHandler = () => {
-    // alert("You purchase a tasty burger!");
     const data = {
       ingredients: ingredients,
       price: price,
@@ -111,15 +113,20 @@ const BurgerBuilder = () => {
       },
       deliveryMethod: "PedidosYa",
     };
-    axios
-      .post("/orders.json", data)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error))
-      .finally(() => {
-        closePurchaseModal();
-        setLoading(false);
-      });
 
+    // axios
+    //   .post("/orders.json", data)
+    //   .then((response) => console.log(response))
+    //   .catch((error) => console.log(error))
+    //   .finally(() => {
+    //     closePurchaseModal();
+    //     setLoading(false);
+    //   });
+
+    history.push({
+      pathname: "/checkout",
+      search: qs.stringify(ingredients),
+    });
     setLoading(true);
   };
 
