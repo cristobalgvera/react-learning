@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 import { CheckoutSummary as CheckoutSummaryStyle } from "./CheckoutSummary.module.scss";
 
-import Burger from "../Burger/Burger";
-import Button from "../UI/Button/Button";
+import Burger from "../../Burger/Burger";
+import Button from "../../UI/Button/Button";
 
 const CheckoutSummary = ({ ingredients, cancelled, continued }) => (
   <div className={CheckoutSummaryStyle}>

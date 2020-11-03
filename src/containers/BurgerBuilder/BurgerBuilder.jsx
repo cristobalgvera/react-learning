@@ -99,33 +99,12 @@ const BurgerBuilder = () => {
   };
 
   const purchaseHandler = () => {
-    const data = {
-      ingredients: ingredients,
-      price: price,
-      customer: {
-        name: "Cristóbal Gajardo",
-        address: {
-          street: "Los Ganaderos 03761",
-          zipCode: "4780000",
-          country: "Chile",
-        },
-        email: "example@test.com",
-      },
-      deliveryMethod: "PedidosYa",
-    };
-
-    // axios
-    //   .post("/orders.json", data)
-    //   .then((response) => console.log(response))
-    //   .catch((error) => console.log(error))
-    //   .finally(() => {
-    //     closePurchaseModal();
-    //     setLoading(false);
-    //   });
-
     history.push({
       pathname: "/checkout",
       search: qs.stringify(ingredients),
+      state: {
+        price: price,
+      },
     });
     setLoading(true);
   };
