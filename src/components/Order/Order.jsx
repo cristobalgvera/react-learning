@@ -13,11 +13,11 @@ const Order = ({
     let list = [];
     for (let ingredient in ingredients)
       list.push(
-        <li>
-          {ingredient}: ({ingredients[ingredient]})
-        </li>
+        <span>
+          {ingredient} ({ingredients[ingredient]})
+        </span>
       );
-    return <ul>{list}</ul>;
+    return list;
   };
 
   return (

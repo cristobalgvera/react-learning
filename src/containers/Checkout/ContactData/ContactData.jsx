@@ -3,19 +3,17 @@ import PropTypes from "prop-types";
 import axios from "../../../services/axios-orders";
 import Button from "../../../components/UI/Button/Button";
 
-import {
-  ContactData as ContactDataStyle,
-  Input,
-} from "./ContactData.module.scss";
+import { ContactData as ContactDataStyle } from "./ContactData.module.scss";
 import { useHistory } from "react-router-dom";
 import Spinner from "../../../components/UI/Spinner/Spinner";
+import Input from "../../../components/UI/Form/Input/Input";
 
 const initialContactData = {
-  name: "Default name",
-  email: "default@email.com",
+  name: "",
+  email: "",
   address: {
-    street: "Default street",
-    postalCode: "0000000",
+    street: "",
+    postalCode: "",
   },
 };
 
@@ -25,6 +23,17 @@ const ContactData = ({ ingredients, price }) => {
   const [loading, setLoading] = useState(false);
 
   const handleFormChange = (property, value) => {
+    let updatedContactData = { ...contactData };
+
+    if (!Object.keys(updatedContactData).includes(property)) {
+      updatedContactData = { ...updatedContactData["address"] };
+      setContactData(({ ...prevState }) => ({
+        ...prevState,
+        address: { ...prevState["address"], [property]: value },
+      }));
+      return;
+    }
+
     setContactData(({ ...prevState }) => ({ ...prevState, [property]: value }));
   };
 
@@ -61,33 +70,33 @@ const ContactData = ({ ingredients, price }) => {
       <Spinner />
     ) : (
       <form>
-        <input
+        <Input
           type="text"
-          className={Input}
           name="name"
           placeholder="Name"
           value={name}
+          change={handleFormChange}
         />
-        <input
+        <Input
           type="email"
-          className={Input}
           name="email"
           placeholder="Email"
           value={email}
+          change={handleFormChange}
         />
-        <input
+        <Input
           type="text"
-          className={Input}
           name="street"
           placeholder="Street"
           value={street}
+          change={handleFormChange}
         />
-        <input
+        <Input
           type="text"
-          className={Input}
           name="postalCode"
           placeholder="Postal code"
           value={postalCode}
+          change={handleFormChange}
         />
         <Button type="Success" clicked={handleFormSubmit}>
           ORDER

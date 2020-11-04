@@ -1,19 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { InputStyle } from "./Input.module.scss";
+import { Input as InputStyle } from "./Input.module.scss";
 
 const Input = ({ type, name, placeholder, value, change }) => (
-  <input
-    type={type}
-    className={InputStyle}
-    name={name}
-    placeholder={placeholder}
-    value={value}
-    onChange={({ target: { value, name: property } }) =>
-      change(property, value)
-    }
-  />
+  <div className={InputStyle}>
+    <label htmlFor={name}>{name}</label>
+    <input
+      type={type}
+      name={name}
+      placeholder={placeholder}
+      value={value}
+      onChange={({ target: { value, name: property } }) =>
+        change(property, value)
+      }
+    />
+  </div>
 );
 
 const { string, number, bool, func } = PropTypes;
