@@ -2,29 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import registerServiceWorker from './registerServiceWorker';
 
-import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
-import counterReducer from './store/reducers/counterReducer';
-import resultReducer from './store/reducers/resultReducer';
-
-const rootReducer = combineReducers({
-    counter: counterReducer,
-    results: resultReducer,
-});
-const store = createStore(rootReducer);
-
-ReactDOM.render(
-    <Provider store={store}>
-        <React.StrictMode>
-            <App/>
-        </React.StrictMode>
-    </Provider>,
-    document.getElementById('root'),
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker();
