@@ -3,16 +3,10 @@ import { connect } from "react-redux";
 
 import CounterControl from "../../components/CounterControl/CounterControl";
 import CounterOutput from "../../components/CounterOutput/CounterOutput";
-import { counterActions } from "../../store/storeActions";
+import { counterActions, resultActions } from "../../store/actions";
 
-const {
-  INCREMENT,
-  DECREMENT,
-  ADD,
-  SUBTRACT,
-  STORE_RESULT,
-  DELETE_RESULT,
-} = counterActions;
+const { INCREMENT, DECREMENT, ADD, SUBTRACT } = counterActions;
+const { STORE_RESULT, DELETE_RESULT } = resultActions;
 
 const Counter = ({ reduxCounterStates, reduxCounterActions }) => {
   const { counter, storedResults } = reduxCounterStates;
@@ -33,7 +27,7 @@ const Counter = ({ reduxCounterStates, reduxCounterActions }) => {
       <CounterControl label="Add 5" clicked={() => onAddCounter(5)} />
       <CounterControl label="Subtract 5" clicked={() => onSubtractCounter(5)} />
       <hr />
-      <button onClick={onStoreResult}>Store result</button>
+      <button onClick={() => onStoreResult(counter)}>Store result</button>
       <ul>
         {storedResults.map(({ id, value }) => (
           <li key={id} onClick={() => onDeleteResult(id)}>
@@ -45,12 +39,15 @@ const Counter = ({ reduxCounterStates, reduxCounterActions }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  reduxCounterStates: {
-    counter: state.counter,
-    storedResults: state.results,
-  },
-});
+const mapStateToProps = (state) => {
+  const { counter, results } = state;
+  return {
+    reduxCounterStates: {
+      counter: counter.counter,
+      storedResults: results.results,
+    },
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   reduxCounterActions: {
@@ -59,7 +56,8 @@ const mapDispatchToProps = (dispatch) => ({
     onAddCounter: (value) => dispatch({ type: ADD, payload: { value: value } }),
     onSubtractCounter: (value) =>
       dispatch({ type: SUBTRACT, payload: { value: value } }),
-    onStoreResult: () => dispatch({ type: STORE_RESULT }),
+    onStoreResult: (value) =>
+      dispatch({ type: STORE_RESULT, payload: { result: { value: value } } }),
     onDeleteResult: (id) =>
       dispatch({ type: DELETE_RESULT, payload: { result: { id: id } } }),
   },

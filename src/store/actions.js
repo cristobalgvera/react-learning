@@ -10,7 +10,7 @@ export const counterActions = createEnum(
   "INCREMENT",
   "DECREMENT",
   "ADD",
-  "SUBTRACT",
-  "STORE_RESULT",
-  "DELETE_RESULT"
+  "SUBTRACT"
 );
+
+export const resultActions = createEnum("STORE_RESULT", "DELETE_RESULT");
