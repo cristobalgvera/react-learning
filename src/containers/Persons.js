@@ -1,44 +1,50 @@
-import React, { Component } from 'react';
+import React from "react";
+import { connect } from "react-redux";
 
-import Person from '../components/Person/Person';
-import AddPerson from '../components/AddPerson/AddPerson';
+import Person from "../components/Person/Person";
+import AddPerson from "../components/AddPerson/AddPerson";
+import { personActions } from "../store/actions";
 
-class Persons extends Component {
-    state = {
-        persons: []
-    }
+const { ADD, REMOVE } = personActions;
 
-    personAddedHandler = () => {
-        const newPerson = {
-            id: Math.random(), // not really unique but good enough here!
-            name: 'Max',
-            age: Math.floor( Math.random() * 40 )
-        }
-        this.setState( ( prevState ) => {
-            return { persons: prevState.persons.concat(newPerson)}
-        } );
-    }
+const Persons = ({ reduxStates: { persons }, reduxActions }) => {
+  const { onRemovePerson, onAddPerson } = reduxActions;
 
-    personDeletedHandler = (personId) => {
-        this.setState( ( prevState ) => {
-            return { persons: prevState.persons.filter(person => person.id !== personId)}
-        } );
-    }
+  return (
+    <div>
+      <AddPerson personAdded={onAddPerson} />
+      {persons.map(({ id, name, age }) => (
+        <Person
+          key={id}
+          name={name}
+          age={age}
+          clicked={() => onRemovePerson(id)}
+        />
+      ))}
+    </div>
+  );
+};
 
-    render () {
-        return (
-            <div>
-                <AddPerson personAdded={this.personAddedHandler} />
-                {this.state.persons.map(person => (
-                    <Person 
-                        key={person.id}
-                        name={person.name} 
-                        age={person.age} 
-                        clicked={() => this.personDeletedHandler(person.id)}/>
-                ))}
-            </div>
-        );
-    }
-}
+const mapStateToProps = (state) => {
+  const { persons } = state;
+  return {
+    reduxStates: {
+      persons: persons,
+    },
+  };
+};
 
-export default Persons;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    reduxActions: {
+      onRemovePerson: (id) =>
+        dispatch({
+          type: REMOVE,
+          payload: { persons: { person: { id: id } } },
+        }),
+      onAddPerson: () => dispatch({ type: ADD }),
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Persons);
