@@ -1,11 +1,12 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { Burger as BurgerStyle } from "./Burger.module.scss";
 
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 
-const Burger = ({ ingredients }) => {
+const Burger = ({ reduxState: { ingredients } }) => {
   let ingredientsTags = Object.keys(ingredients)
     .map((ingredient) =>
       [...Array(+ingredients[ingredient])].map((_, i) => (
@@ -31,11 +32,13 @@ const Burger = ({ ingredients }) => {
 
 const { number, shape } = PropTypes;
 Burger.propTypes = {
-  ingredients: shape({
-    salad: number,
-    bacon: number,
-    cheese: number,
-    meat: number,
+  reduxState: shape({
+    ingredients: shape({
+      salad: number,
+      bacon: number,
+      cheese: number,
+      meat: number,
+    }).isRequired,
   }).isRequired,
 };
 
@@ -43,4 +46,8 @@ const capitalize = (phrase) => {
   return phrase.charAt(0).toUpperCase() + phrase.slice(1);
 };
 
-export default Burger;
+const mapStateToProps = ({ ingredients }) => ({
+  reduxState: { ingredients: ingredients },
+});
+
+export default connect(mapStateToProps, () => ({}))(Burger);

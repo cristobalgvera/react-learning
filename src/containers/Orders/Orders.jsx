@@ -28,7 +28,6 @@ const Orders = () => {
   const ordersList = () =>
     orders.map((order) => {
       const { customer, ingredients, price, deliveryMethod, id } = order;
-      console.log(ingredients);
       return (
         <Order
           key={id}

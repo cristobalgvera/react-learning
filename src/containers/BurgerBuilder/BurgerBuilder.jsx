@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../services/axios-orders";
+import { connect } from "react-redux";
 import qs from "querystring";
 
 import Burger from "../../components/Burger/Burger";
-
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import BurgerBuilderContext from "../../context/BurgerBuilderContext/BurgerBuilderContext";
 import Modal from "../../components/UI/Modal/Modal";
@@ -20,15 +20,17 @@ const INGREDIENT_PRICES = {
   meat: 2000,
 };
 
-const BurgerBuilder = () => {
-  const [price, setPrice] = useState(0);
+const BurgerBuilder = ({ reduxState: { ingredients } }) => {
+  const history = useHistory();
+
   const [disabledButtonsInfo, setDisabledButtonsInfo] = useState({});
+
   const [purchasable, setPurchasable] = useState(false);
   const [purchasing, setPurchasing] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [ingredients, setIngredients] = useState();
   const [error, setError] = useState(false);
-  const history = useHistory();
+
+  const [price, setPrice] = useState(0);
 
   useEffect(() => {
     setDisabledButtonsInfo(() => {
@@ -57,38 +59,6 @@ const BurgerBuilder = () => {
         : 2000;
     });
   }, [ingredients]);
-
-  useEffect(() => {
-    const getIngredients = async () => {
-      try {
-        const response = await axios.get("/ingredients.json");
-        return await response.data;
-      } catch (error) {
-        setError(true);
-      }
-    };
-
-    getIngredients()
-      .then((ingredients) => setIngredients(ingredients))
-      .catch(({ message }) => console.log(message));
-  }, []);
-
-  const addIngredientHandler = (ingredient) => {
-    setIngredients(({ ...prevState }) => ({
-      ...prevState,
-      [ingredient]: ++prevState[ingredient],
-    }));
-  };
-
-  const removeIngredientHandler = (ingredient) => {
-    if (ingredients[ingredient] <= 0) {
-      return;
-    }
-    setIngredients(({ ...prevState }) => ({
-      ...prevState,
-      [ingredient]: --prevState[ingredient],
-    }));
-  };
 
   const showPurchaseModal = () => {
     setPurchasing(true);
@@ -124,11 +94,9 @@ const BurgerBuilder = () => {
   const burgerHelper = () =>
     ingredients ? (
       <>
-        <Burger ingredients={ingredients} />
+        <Burger />
         <BurgerBuilderContext.Provider
           value={{
-            addIngredient: addIngredientHandler,
-            removeIngredient: removeIngredientHandler,
             disabledInfo: disabledButtonsInfo,
           }}
         >
@@ -155,4 +123,10 @@ const BurgerBuilder = () => {
   );
 };
 
-export default withErrorHandler(BurgerBuilder, axios);
+const mapStateToProps = ({ ingredients }) => ({
+  reduxState: { ingredients: ingredients },
+});
+
+export default connect(mapStateToProps, () => ({}))(
+  withErrorHandler(BurgerBuilder, axios)
+);

@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import {
@@ -8,30 +9,34 @@ import {
 
 import BuildControl from "./BuildControl/BuildControl";
 
-const controls = [
-  { label: "Salad", ingredient: "salad" },
-  { label: "Bacon", ingredient: "bacon" },
-  { label: "Cheese", ingredient: "cheese" },
-  { label: "Meat", ingredient: "meat" },
-];
-
-const BuildControls = ({ price, purchasable, summarize }) => (
-  <div className={BuildControlsClass}>
-    <p>
-      Price: <strong>${price}</strong>
-    </p>
-    {controls.map(({ ingredient, label }) => (
-      <BuildControl key={label} label={label} ingredient={ingredient} />
-    ))}
-    <button
-      disabled={!purchasable}
-      className={OrderButton}
-      onClick={() => summarize()}
-    >
-      ORDER NOW
-    </button>
-  </div>
-);
+const BuildControls = ({
+  price,
+  purchasable,
+  summarize,
+  reduxState: { ingredients },
+}) => {
+  return (
+    <div className={BuildControlsClass}>
+      <p>
+        Price: <strong>${price}</strong>
+      </p>
+      {Object.keys(ingredients).map((ingredient) => (
+        <BuildControl
+          key={ingredient}
+          label={ingredient}
+          ingredient={ingredient}
+        />
+      ))}
+      <button
+        disabled={!purchasable}
+        className={OrderButton}
+        onClick={() => summarize()}
+      >
+        ORDER NOW
+      </button>
+    </div>
+  );
+};
 
 const { number, bool, func } = PropTypes;
 BuildControls.propTypes = {
@@ -40,4 +45,8 @@ BuildControls.propTypes = {
   summarize: func.isRequired,
 };
 
-export default BuildControls;
+const mapStateToProps = ({ ingredients }) => ({
+  reduxState: { ingredients: ingredients },
+});
+
+export default connect(mapStateToProps, () => ({}))(BuildControls);

@@ -13,7 +13,7 @@ const Order = ({
     let list = [];
     for (let ingredient in ingredients)
       list.push(
-        <span>
+        <span key={ingredient}>
           {ingredient} ({ingredients[ingredient]})
         </span>
       );

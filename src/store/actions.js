@@ -1,0 +1,6 @@
+const INGREDIENTS_ACTIONS = {
+  ADD: "ADD",
+  REMOVE: "REMOVE",
+};
+
+export { INGREDIENTS_ACTIONS };

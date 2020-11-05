@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import BurgerBuilderContext from "../../../../context/BurgerBuilderContext/BurgerBuilderContext";
+import { INGREDIENTS_ACTIONS } from "../../../../store/actions";
 
 import {
   BuildControl as BuildControlClass,
@@ -10,21 +12,26 @@ import {
   Label,
 } from "./BuildControl.module.scss";
 
-const BuildControl = ({ label, ingredient }) => {
-  const { addIngredient, removeIngredient, disabledInfo } = useContext(
-    BurgerBuilderContext
-  );
+const { ADD, REMOVE } = INGREDIENTS_ACTIONS;
+
+const BuildControl = ({
+  label,
+  ingredient,
+  reduxActions: { onRemoveIngredient, onAddIngredient },
+}) => {
+  const { disabledInfo } = useContext(BurgerBuilderContext);
+
   return (
     <div className={BuildControlClass}>
       <div className={Label}>{label}</div>
       <button
         className={Less}
         disabled={disabledInfo[ingredient]}
-        onClick={() => removeIngredient(ingredient)}
+        onClick={() => onRemoveIngredient(ingredient)}
       >
         Less
       </button>
-      <button className={More} onClick={() => addIngredient(ingredient)}>
+      <button className={More} onClick={() => onAddIngredient(ingredient)}>
         More
       </button>
     </div>
@@ -37,4 +44,13 @@ BuildControl.propTypes = {
   ingredient: string.isRequired,
 };
 
-export default BuildControl;
+const mapDispatcToProps = (dispatch) => ({
+  reduxActions: {
+    onAddIngredient: (ingredient) =>
+      dispatch({ type: ADD, payload: { ingredient: ingredient } }),
+    onRemoveIngredient: (ingredient) =>
+      dispatch({ type: REMOVE, payload: { ingredient: ingredient } }),
+  },
+});
+
+export default connect(() => ({}), mapDispatcToProps)(BuildControl);

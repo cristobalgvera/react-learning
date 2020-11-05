@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
 const BurgerBuilderContext = createContext({
-  addIngredient: () => {},
-  removeIngredient: () => {},
+  // addIngredient: () => {},
+  // removeIngredient: () => {},
   disabledInfo: {},
 });
 
