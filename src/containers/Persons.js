@@ -42,7 +42,8 @@ const mapDispatchToProps = (dispatch) => {
           type: REMOVE,
           payload: { persons: { person: { id: id } } },
         }),
-      onAddPerson: () => dispatch({ type: ADD }),
+      onAddPerson: (person) =>
+        dispatch({ type: ADD, payload: { person: person } }),
     },
   };
 };

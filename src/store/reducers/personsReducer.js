@@ -11,7 +11,7 @@ const personsReducer = (state = initialState, action) => {
   const { payload, type } = action;
   switch (type) {
     case ADD:
-      return { ...state, persons: personAddedHandler(persons) };
+      return { ...state, persons: personAddedHandler(persons, payload.person) };
     case REMOVE:
       return {
         ...state,
@@ -24,11 +24,12 @@ const personsReducer = (state = initialState, action) => {
   }
 };
 
-const personAddedHandler = (persons) => {
+const personAddedHandler = (persons, person) => {
+  const { name, age } = person;
   const newPerson = {
     id: Math.random(), // not really unique but good enough here!
-    name: "Cristóbal",
-    age: Math.floor(Math.random() * 40),
+    name: name,
+    age: age,
   };
   return persons.concat(newPerson);
 };
