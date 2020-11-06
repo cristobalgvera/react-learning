@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { Order as OrderStyle } from "./Order.module.scss";
@@ -6,8 +7,7 @@ import { Order as OrderStyle } from "./Order.module.scss";
 const Order = ({
   customer: { email, name },
   deliveryMethod,
-  price,
-  ingredients,
+  reduxState: { price, ingredients },
 }) => {
   const ingredientsList = () => {
     let list = [];
@@ -56,4 +56,9 @@ Order.propTypes = {
   price: number.isRequired,
 };
 
-export default Order;
+const mapStateToProps = ({
+  ingredients: { ingredients },
+  price: { price },
+}) => ({ reduxState: { price: price, ingredients: ingredients } });
+
+export default connect(mapStateToProps, () => ({}))(Order);

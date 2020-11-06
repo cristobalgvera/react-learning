@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { Burger as BurgerStyle } from "./Burger.module.scss";
 
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
+import { PRICE_ACTIONS } from "../../store/actions/priceActions";
+
+const { CALCULATE } = PRICE_ACTIONS;
 
 const Burger = ({ reduxState: { ingredients } }) => {
   let ingredientsTags = Object.keys(ingredients)
@@ -46,7 +49,7 @@ const capitalize = (phrase) => {
   return phrase.charAt(0).toUpperCase() + phrase.slice(1);
 };
 
-const mapStateToProps = ({ ingredients }) => ({
+const mapStateToProps = ({ ingredients: { ingredients } }) => ({
   reduxState: { ingredients: ingredients },
 });
 

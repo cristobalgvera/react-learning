@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 
 import {
   BuildControls as BuildControlsClass,
@@ -8,13 +7,23 @@ import {
 } from "./BuildControls.module.scss";
 
 import BuildControl from "./BuildControl/BuildControl";
+import { PRICE_ACTIONS } from "../../../store/actions/priceActions";
+
+const { CALCULATE } = PRICE_ACTIONS;
 
 const BuildControls = ({
-  price,
   purchasable,
   summarize,
-  reduxState: { ingredients },
+  reduxState: { ingredients, price },
+  reduxActions: { updatePrice },
 }) => {
+  const updatePriceHandler = (ingredient, amount) => {
+    updatePrice({
+      ...ingredients,
+      [ingredient]: ingredients[ingredient] + amount,
+    });
+  };
+
   return (
     <div className={BuildControlsClass}>
       <p>
@@ -25,6 +34,7 @@ const BuildControls = ({
           key={ingredient}
           label={ingredient}
           ingredient={ingredient}
+          updatePrice={updatePriceHandler}
         />
       ))}
       <button
@@ -38,15 +48,18 @@ const BuildControls = ({
   );
 };
 
-const { number, bool, func } = PropTypes;
-BuildControls.propTypes = {
-  price: number.isRequired,
-  purchasable: bool.isRequired,
-  summarize: func.isRequired,
-};
-
-const mapStateToProps = ({ ingredients }) => ({
-  reduxState: { ingredients: ingredients },
+const mapStateToProps = ({
+  ingredients: { ingredients },
+  price: { price },
+}) => ({
+  reduxState: { ingredients: ingredients, price: price },
 });
 
-export default connect(mapStateToProps, () => ({}))(BuildControls);
+const mapDispatchToProps = (dispatch) => ({
+  reduxActions: {
+    updatePrice: (ingredients) =>
+      dispatch({ type: CALCULATE, payload: { ingredients: ingredients } }),
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BuildControls);

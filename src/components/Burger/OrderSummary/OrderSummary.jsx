@@ -1,9 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import Button from "../../UI/Button/Button";
 
-const OrderSummary = ({ purchase, close, ingredients, price }) => {
+const OrderSummary = ({
+  purchase,
+  close,
+  reduxState: { ingredients, price },
+}) => {
   const summary = Object.keys(ingredients).map((ingredient) => (
     <li key={ingredient}>
       <span style={{ textTransform: "capitalize" }}>{ingredient}</span>:{" "}
@@ -33,14 +38,21 @@ const OrderSummary = ({ purchase, close, ingredients, price }) => {
 const { func, shape, number } = PropTypes;
 OrderSummary.propTypes = {
   close: func.isRequired,
-  ingredients: shape({
-    salad: number,
-    bacon: number,
-    cheese: number,
-    meat: number,
+  reduxState: shape({
+    ingredients: shape({
+      salad: number,
+      bacon: number,
+      cheese: number,
+      meat: number,
+    }).isRequired,
+    price: number.isRequired,
   }).isRequired,
-  price: number.isRequired,
   purchase: func.isRequired,
 };
 
-export default OrderSummary;
+const mapStateToProps = ({
+  ingredients: { ingredients },
+  price: { price },
+}) => ({ reduxState: { ingredients: ingredients, price: price } });
+
+export default connect(mapStateToProps, () => ({}))(OrderSummary);

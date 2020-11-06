@@ -1,0 +1,5 @@
+const PRICE_ACTIONS = {
+  CALCULATE: "CALCULATE",
+};
+
+export { PRICE_ACTIONS };

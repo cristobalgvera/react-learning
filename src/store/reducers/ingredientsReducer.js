@@ -1,5 +1,5 @@
 import axios from "../../services/axios-orders";
-import { INGREDIENTS_ACTIONS } from "../actions";
+import { INGREDIENTS_ACTIONS } from "../actions/ingredientsActions";
 
 const { ADD, REMOVE } = INGREDIENTS_ACTIONS;
 

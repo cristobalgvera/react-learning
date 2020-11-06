@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import axios from "../../../services/axios-orders";
 import Button from "../../../components/UI/Button/Button";
@@ -17,7 +18,7 @@ const initialContactData = {
   },
 };
 
-const ContactData = ({ ingredients, price }) => {
+const ContactData = ({ reduxState: { ingredients }, price }) => {
   const history = useHistory();
   const [contactData, setContactData] = useState({ ...initialContactData });
   const [loading, setLoading] = useState(false);
@@ -44,7 +45,6 @@ const ContactData = ({ ingredients, price }) => {
       ingredients: ingredients,
       price: price,
       customer: contactData,
-      deliveryMethod: "PedidosYa",
     };
     console.log(data);
 
@@ -114,13 +114,19 @@ const ContactData = ({ ingredients, price }) => {
 
 const { number, shape } = PropTypes;
 ContactData.propTypes = {
-  ingredients: shape({
-    salad: number,
-    bacon: number,
-    cheese: number,
-    meat: number,
+  reduxState: shape({
+    ingredients: shape({
+      salad: number,
+      bacon: number,
+      cheese: number,
+      meat: number,
+    }).isRequired,
   }).isRequired,
   price: number.isRequired,
 };
 
-export default ContactData;
+const mapStateToProps = ({ ingredients: { ingredients } }) => ({
+  reduxState: { ingredients: ingredients },
+});
+
+export default connect(mapStateToProps, () => ({}))(ContactData);
