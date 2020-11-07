@@ -8,7 +8,11 @@ import { ContactData as ContactDataStyle } from "./ContactData.module.scss";
 import { useHistory } from "react-router-dom";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Form/Input/Input";
+import { INGREDIENTS_ACTIONS } from "../../../store/actions/ingredientsActions";
+import { PRICE_ACTIONS } from "../../../store/actions/priceActions";
 
+const { RESET_PRICE } = PRICE_ACTIONS;
+const { RESET_INGREDIENTS } = INGREDIENTS_ACTIONS;
 const initialContactData = {
   name: "",
   email: "",
@@ -18,7 +22,10 @@ const initialContactData = {
   },
 };
 
-const ContactData = ({ reduxState: { ingredients }, price }) => {
+const ContactData = ({
+  reduxState: { ingredients, price },
+  reduxActions: { onCheckout },
+}) => {
   const history = useHistory();
   const [contactData, setContactData] = useState({ ...initialContactData });
   const [loading, setLoading] = useState(false);
@@ -55,6 +62,7 @@ const ContactData = ({ reduxState: { ingredients }, price }) => {
       .finally(() => {
         if (window.confirm("Order ready!")) {
           setLoading(false);
+          onCheckout();
           history.push("/burger-builder");
         }
       });
@@ -121,12 +129,24 @@ ContactData.propTypes = {
       cheese: number,
       meat: number,
     }).isRequired,
+    price: number.isRequired,
   }).isRequired,
-  price: number.isRequired,
 };
 
-const mapStateToProps = ({ ingredients: { ingredients } }) => ({
-  reduxState: { ingredients: ingredients },
+const mapStateToProps = ({
+  ingredients: { ingredients },
+  price: { price },
+}) => ({
+  reduxState: { ingredients: ingredients, price: price },
 });
 
-export default connect(mapStateToProps, () => ({}))(ContactData);
+const mapDispatchToProps = (dispatch) => ({
+  reduxActions: {
+    onCheckout: () => {
+      dispatch({ type: RESET_PRICE });
+      dispatch({ type: RESET_INGREDIENTS });
+    },
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);

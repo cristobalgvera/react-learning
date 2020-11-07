@@ -1,7 +1,11 @@
 import axios from "../../services/axios-orders";
 import { INGREDIENTS_ACTIONS } from "../actions/ingredientsActions";
 
-const { ADD, REMOVE } = INGREDIENTS_ACTIONS;
+const {
+  ADD_INGREDIENT,
+  REMOVE_INGREDIENT,
+  RESET_INGREDIENTS,
+} = INGREDIENTS_ACTIONS;
 
 const initialState = {
   ingredients: {
@@ -15,15 +19,20 @@ const initialState = {
 const ingredientsReducer = (state = initialState, { payload, type }) => {
   const { ingredients } = state;
   switch (type) {
-    case ADD:
+    case ADD_INGREDIENT:
       return {
         ...state,
         ingredients: addIngredientHandler(ingredients, payload.ingredient),
       };
-    case REMOVE:
+    case REMOVE_INGREDIENT:
       return {
         ...state,
         ingredients: removeIngredientHandler(ingredients, payload.ingredient),
+      };
+    case RESET_INGREDIENTS:
+      return {
+        ...state,
+        ingredients: { ...initialState.ingredients },
       };
     default:
       return state;

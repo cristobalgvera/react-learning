@@ -1,6 +1,6 @@
 import { PRICE_ACTIONS } from "../actions/priceActions";
 
-const { CALCULATE } = PRICE_ACTIONS;
+const { CALCULATE_PRICE, RESET_PRICE } = PRICE_ACTIONS;
 
 const initialState = {
   price: 2000,
@@ -15,8 +15,10 @@ const PRICES = {
 
 const priceReducer = (state = initialState, { payload, type }) => {
   switch (type) {
-    case CALCULATE:
+    case CALCULATE_PRICE:
       return { ...state, price: calculateActualPrice(payload.ingredients) };
+    case RESET_PRICE:
+      return { ...state, price: initialState.price };
     default:
       return state;
   }

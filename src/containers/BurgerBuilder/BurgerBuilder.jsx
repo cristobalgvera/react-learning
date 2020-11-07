@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../services/axios-orders";
 import { connect } from "react-redux";
-import qs from "querystring";
 
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
@@ -91,6 +90,4 @@ const mapStateToProps = ({ ingredients: { ingredients } }) => ({
   reduxState: { ingredients: ingredients },
 });
 
-export default connect(mapStateToProps, () => ({}))(
-  withErrorHandler(BurgerBuilder, axios)
-);
+export default connect(mapStateToProps)(withErrorHandler(BurgerBuilder, axios));

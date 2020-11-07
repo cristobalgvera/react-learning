@@ -44,4 +44,4 @@ const mapStateToProps = ({ ingredients: { ingredients } }) => ({
   reduxState: { ingredients: ingredients },
 });
 
-export default connect(mapStateToProps, () => ({}))(CheckoutSummary);
+export default connect(mapStateToProps)(CheckoutSummary);

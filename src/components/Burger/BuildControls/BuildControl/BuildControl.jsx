@@ -12,7 +12,7 @@ import {
   Label,
 } from "./BuildControl.module.scss";
 
-const { ADD, REMOVE } = INGREDIENTS_ACTIONS;
+const { ADD_INGREDIENT, REMOVE_INGREDIENT } = INGREDIENTS_ACTIONS;
 
 const BuildControl = ({
   label,
@@ -24,16 +24,16 @@ const BuildControl = ({
 
   const onClickHandler = (type) => {
     switch (type) {
-      case ADD:
+      case ADD_INGREDIENT:
         onAddIngredient(ingredient);
         updatePrice(ingredient, 1);
         break;
-      case REMOVE:
+      case REMOVE_INGREDIENT:
         onRemoveIngredient(ingredient);
         updatePrice(ingredient, -1);
         break;
       default:
-        break;
+        return;
     }
   };
 
@@ -43,11 +43,11 @@ const BuildControl = ({
       <button
         className={Less}
         disabled={disabledInfo[ingredient]}
-        onClick={() => onClickHandler(REMOVE)}
+        onClick={() => onClickHandler(REMOVE_INGREDIENT)}
       >
         Less
       </button>
-      <button className={More} onClick={() => onClickHandler(ADD)}>
+      <button className={More} onClick={() => onClickHandler(ADD_INGREDIENT)}>
         More
       </button>
     </div>
@@ -64,10 +64,13 @@ BuildControl.propTypes = {
 const mapDispatcToProps = (dispatch) => ({
   reduxActions: {
     onAddIngredient: (ingredient) =>
-      dispatch({ type: ADD, payload: { ingredient: ingredient } }),
+      dispatch({ type: ADD_INGREDIENT, payload: { ingredient: ingredient } }),
     onRemoveIngredient: (ingredient) =>
-      dispatch({ type: REMOVE, payload: { ingredient: ingredient } }),
+      dispatch({
+        type: REMOVE_INGREDIENT,
+        payload: { ingredient: ingredient },
+      }),
   },
 });
 
-export default connect(() => ({}), mapDispatcToProps)(BuildControl);
+export default connect(null, mapDispatcToProps)(BuildControl);

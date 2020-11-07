@@ -9,7 +9,7 @@ import {
 import BuildControl from "./BuildControl/BuildControl";
 import { PRICE_ACTIONS } from "../../../store/actions/priceActions";
 
-const { CALCULATE } = PRICE_ACTIONS;
+const { CALCULATE_PRICE } = PRICE_ACTIONS;
 
 const BuildControls = ({
   purchasable,
@@ -58,7 +58,10 @@ const mapStateToProps = ({
 const mapDispatchToProps = (dispatch) => ({
   reduxActions: {
     updatePrice: (ingredients) =>
-      dispatch({ type: CALCULATE, payload: { ingredients: ingredients } }),
+      dispatch({
+        type: CALCULATE_PRICE,
+        payload: { ingredients: ingredients },
+      }),
   },
 });
 

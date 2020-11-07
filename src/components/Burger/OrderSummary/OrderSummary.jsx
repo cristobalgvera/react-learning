@@ -55,4 +55,4 @@ const mapStateToProps = ({
   price: { price },
 }) => ({ reduxState: { ingredients: ingredients, price: price } });
 
-export default connect(mapStateToProps, () => ({}))(OrderSummary);
+export default connect(mapStateToProps)(OrderSummary);
