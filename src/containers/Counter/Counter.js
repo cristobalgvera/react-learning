@@ -39,12 +39,14 @@ const Counter = ({ reduxCounterStates, reduxCounterActions }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  const { counter, results } = state;
+const mapStateToProps = ({
+  counterReducer: { counter },
+  resultsReducer: { results },
+}) => {
   return {
     reduxCounterStates: {
-      counter: counter.counter,
-      storedResults: results.results,
+      counter: counter,
+      storedResults: results,
     },
   };
 };
