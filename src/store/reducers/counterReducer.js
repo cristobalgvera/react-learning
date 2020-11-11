@@ -1,4 +1,4 @@
-import { counterActions } from "../actions";
+import { counterActions } from "../actions/actionTypes";
 
 const { INCREMENT, DECREMENT, ADD, SUBTRACT } = counterActions;
 

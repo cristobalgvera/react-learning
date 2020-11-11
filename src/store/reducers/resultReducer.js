@@ -1,4 +1,4 @@
-import { resultActions } from "../actions";
+import { resultActions } from "../actions/actionTypes";
 
 const { STORE_RESULT, DELETE_RESULT } = resultActions;
 
