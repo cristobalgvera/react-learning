@@ -1,4 +1,5 @@
-import { PRICE_ACTIONS } from "../actions/priceActions";
+import { PRICE_ACTIONS } from "../actions/actionTypes";
+import { updateState } from "../utility";
 
 const { CALCULATE_PRICE, RESET_PRICE } = PRICE_ACTIONS;
 
@@ -16,18 +17,21 @@ const PRICES = {
 const priceReducer = (state = initialState, { payload, type }) => {
   switch (type) {
     case CALCULATE_PRICE:
-      return { ...state, price: calculateActualPrice(payload.ingredients) };
+      return calculatePrice(state, payload);
     case RESET_PRICE:
-      return { ...state, price: initialState.price };
+      return updateState(state, { price: initialState.price });
     default:
       return state;
   }
 };
 
-const calculateActualPrice = (ingredients) =>
-  Object.keys(ingredients).reduce(
+const calculatePrice = (state, payload) => {
+  const { ingredients } = payload;
+  const updatedPrice = Object.keys(ingredients).reduce(
     (acc, cur) => acc + ingredients[cur] * PRICES[cur],
     initialState.price
   );
+  return updateState(state, { price: updatedPrice });
+};
 
 export default priceReducer;

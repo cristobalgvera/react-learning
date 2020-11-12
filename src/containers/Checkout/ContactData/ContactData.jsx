@@ -8,11 +8,8 @@ import { ContactData as ContactDataStyle } from "./ContactData.module.scss";
 import { useHistory } from "react-router-dom";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Form/Input/Input";
-import { INGREDIENTS_ACTIONS } from "../../../store/actions/ingredientsActions";
-import { PRICE_ACTIONS } from "../../../store/actions/priceActions";
+import { resetPrice, resetIngredients } from "../../../store/actions/index";
 
-const { RESET_PRICE } = PRICE_ACTIONS;
-const { RESET_INGREDIENTS } = INGREDIENTS_ACTIONS;
 const initialContactData = {
   name: "",
   email: "",
@@ -143,8 +140,8 @@ const mapStateToProps = ({
 const mapDispatchToProps = (dispatch) => ({
   reduxActions: {
     onCheckout: () => {
-      dispatch({ type: RESET_PRICE });
-      dispatch({ type: RESET_INGREDIENTS });
+      dispatch(resetIngredients());
+      dispatch(resetPrice());
     },
   },
 });

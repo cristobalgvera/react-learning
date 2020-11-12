@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import BurgerBuilderContext from "../../../../context/BurgerBuilderContext/BurgerBuilderContext";
-import { INGREDIENTS_ACTIONS } from "../../../../store/actions/ingredientsActions";
+import { INGREDIENTS_ACTIONS } from "../../../../store/actions/actionTypes";
+import {
+  addIngredient,
+  removeIngredient,
+} from "../../../../store/actions/index";
 
 import {
   BuildControl as BuildControlClass,
@@ -63,13 +67,8 @@ BuildControl.propTypes = {
 
 const mapDispatcToProps = (dispatch) => ({
   reduxActions: {
-    onAddIngredient: (ingredient) =>
-      dispatch({ type: ADD_INGREDIENT, payload: { ingredient: ingredient } }),
-    onRemoveIngredient: (ingredient) =>
-      dispatch({
-        type: REMOVE_INGREDIENT,
-        payload: { ingredient: ingredient },
-      }),
+    onAddIngredient: (ingredient) => dispatch(addIngredient(ingredient)),
+    onRemoveIngredient: (ingredient) => dispatch(removeIngredient(ingredient)),
   },
 });
 

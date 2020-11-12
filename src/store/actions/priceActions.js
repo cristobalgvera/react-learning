@@ -1,6 +1,12 @@
-const PRICE_ACTIONS = {
-  CALCULATE_PRICE: "CALCULATE_PRICE",
-  RESET_PRICE: "RESET_PRICE",
-};
+import { PRICE_ACTIONS } from "./actionTypes";
 
-export { PRICE_ACTIONS };
+const { CALCULATE_PRICE, RESET_PRICE } = PRICE_ACTIONS;
+
+const calculatePrice = (ingredients) => ({
+  type: CALCULATE_PRICE,
+  payload: { ingredients: ingredients },
+});
+
+const resetPrice = () => ({ type: RESET_PRICE });
+
+export { calculatePrice, resetPrice };

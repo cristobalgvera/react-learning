@@ -1,5 +1,5 @@
-import axios from "../../services/axios-orders";
-import { INGREDIENTS_ACTIONS } from "../actions/ingredientsActions";
+import { INGREDIENTS_ACTIONS } from "../actions/actionTypes";
+import { updateState } from "../utility";
 
 const {
   ADD_INGREDIENT,
@@ -17,38 +17,38 @@ const initialState = {
 };
 
 const ingredientsReducer = (state = initialState, { payload, type }) => {
-  const { ingredients } = state;
   switch (type) {
     case ADD_INGREDIENT:
-      return {
-        ...state,
-        ingredients: addIngredientHandler(ingredients, payload.ingredient),
-      };
+      return addIngredient(state, payload);
     case REMOVE_INGREDIENT:
-      return {
-        ...state,
-        ingredients: removeIngredientHandler(ingredients, payload.ingredient),
-      };
+      return removeIngredient(state, payload);
     case RESET_INGREDIENTS:
-      return {
-        ...state,
+      return updateState(state, {
         ingredients: { ...initialState.ingredients },
-      };
+      });
     default:
       return state;
   }
 };
 
-const addIngredientHandler = (ingredients, ingredient) => ({
-  ...ingredients,
-  [ingredient]: ingredients[ingredient] + 1,
-});
+const addIngredient = (state, payload) => {
+  const { ingredient } = payload;
+  const { ingredients } = state;
+  const updatedIngredients = {
+    ...ingredients,
+    [ingredient]: ingredients[ingredient] + 1,
+  };
+  return updateState(state, { ingredients: updatedIngredients });
+};
 
-const removeIngredientHandler = (ingredients, ingredient) => {
-  if (ingredients[ingredient] <= 0) {
-    return;
-  }
-  return { ...ingredients, [ingredient]: ingredients[ingredient] - 1 };
+const removeIngredient = (state, payload) => {
+  const { ingredient } = payload;
+  const { ingredients } = state;
+  const updatedIngredients = {
+    ...ingredients,
+    [ingredient]: ingredients[ingredient] - 1,
+  };
+  return updateState(state, { ingredients: updatedIngredients });
 };
 
 export default ingredientsReducer;

@@ -7,9 +7,7 @@ import {
 } from "./BuildControls.module.scss";
 
 import BuildControl from "./BuildControl/BuildControl";
-import { PRICE_ACTIONS } from "../../../store/actions/priceActions";
-
-const { CALCULATE_PRICE } = PRICE_ACTIONS;
+import { calculatePrice } from "../../../store/actions/index";
 
 const BuildControls = ({
   purchasable,
@@ -57,11 +55,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = (dispatch) => ({
   reduxActions: {
-    updatePrice: (ingredients) =>
-      dispatch({
-        type: CALCULATE_PRICE,
-        payload: { ingredients: ingredients },
-      }),
+    updatePrice: (ingredients) => dispatch(calculatePrice(ingredients)),
   },
 });
 
