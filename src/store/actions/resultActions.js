@@ -8,7 +8,7 @@ const saveResult = (value) => ({
 });
 
 // Try to not overuse getState(), instead, if certain state is needed,
-// request for it like an argument parameter
+// request for it as an argument parameter
 const storeResult = (value) => (dispatch, getState) => {
   setTimeout(() => {
     const {

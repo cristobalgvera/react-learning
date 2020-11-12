@@ -1,4 +1,5 @@
 import { counterActions } from "../actions/actionTypes";
+import { updateState } from "../utility";
 
 const { INCREMENT, DECREMENT, ADD, SUBTRACT } = counterActions;
 
@@ -11,13 +12,13 @@ const counterReducer = (state = initialState, action) => {
   const { payload } = action;
   switch (action.type) {
     case INCREMENT:
-      return { ...state, counter: counter + 1 };
+      return updateState(state, { counter: counter + 1 });
     case DECREMENT:
-      return { ...state, counter: counter - 1 };
+      return updateState(state, { counter: counter - 1 });
     case ADD:
-      return { ...state, counter: counter + payload.value };
+      return updateState(state, { counter: counter + payload.value });
     case SUBTRACT:
-      return { ...state, counter: counter - payload.value };
+      return updateState(state, { counter: counter - payload.value });
     default:
       return state;
   }
