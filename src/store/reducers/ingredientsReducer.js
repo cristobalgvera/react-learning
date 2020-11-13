@@ -4,16 +4,13 @@ import { updateState } from "../utility";
 const {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
-  RESET_INGREDIENTS,
+  FETCH_INGREDIENTS_FAIL,
+  SET_INGREDIENTS,
 } = INGREDIENTS_ACTIONS;
 
 const initialState = {
-  ingredients: {
-    bacon: 0,
-    meat: 0,
-    cheese: 0,
-    salad: 0,
-  },
+  ingredients: null,
+  error: false,
 };
 
 const ingredientsReducer = (state = initialState, { payload, type }) => {
@@ -22,10 +19,10 @@ const ingredientsReducer = (state = initialState, { payload, type }) => {
       return addIngredient(state, payload);
     case REMOVE_INGREDIENT:
       return removeIngredient(state, payload);
-    case RESET_INGREDIENTS:
-      return updateState(state, {
-        ingredients: { ...initialState.ingredients },
-      });
+    case SET_INGREDIENTS:
+      return updateState(state, { ingredients: payload.ingredients });
+    case FETCH_INGREDIENTS_FAIL:
+      return updateState(state, { error: true });
     default:
       return state;
   }

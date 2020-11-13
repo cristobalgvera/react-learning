@@ -14,6 +14,7 @@ const Checkout = ({ reduxState: { ingredients } }) => {
 
   const continuedCheckoutHandler = () => {
     const areEnoughIngredients =
+      ingredients &&
       Object.values(ingredients).reduce((acc, cur) => acc + cur, 0) > 0;
     if (areEnoughIngredients) history.replace(`${url}/contact-data`);
     else if (window.confirm("Add some ingredients!"))
@@ -31,7 +32,7 @@ const Checkout = ({ reduxState: { ingredients } }) => {
   );
 };
 
-const mapStateToProps = ({ ingredients: { ingredients } }) => ({
+const mapStateToProps = ({ ingredientsReducer: { ingredients } }) => ({
   reduxState: { ingredients: ingredients },
 });
 

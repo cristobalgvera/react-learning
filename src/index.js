@@ -4,19 +4,21 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import { createStore, combineReducers } from "redux";
+import thunk from "redux-thunk";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import ingredientsReducer from "./store/reducers/ingredientsReducer";
 import priceReducer from "./store/reducers/priceReducer";
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
-  ingredients: ingredientsReducer,
-  price: priceReducer,
+  ingredientsReducer: ingredientsReducer,
+  priceReducer: priceReducer,
 });
 
 const store = createStore(
   rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeEnhancers(applyMiddleware(thunk))
 );
 
 ReactDOM.render(

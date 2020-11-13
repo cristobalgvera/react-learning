@@ -51,8 +51,8 @@ OrderSummary.propTypes = {
 };
 
 const mapStateToProps = ({
-  ingredients: { ingredients },
-  price: { price },
+  ingredientsReducer: { ingredients },
+  priceReducer: { price },
 }) => ({ reduxState: { ingredients: ingredients, price: price } });
 
 export default connect(mapStateToProps)(OrderSummary);

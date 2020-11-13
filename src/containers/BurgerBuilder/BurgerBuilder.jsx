@@ -11,13 +11,21 @@ import WillBeClickedContext from "../../context/WillBeClickedContext/WillBeClick
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import { useHistory } from "react-router-dom";
+import { initIngredients } from "../../store/actions/index";
 
-const BurgerBuilder = ({ reduxState: { ingredients } }) => {
+const BurgerBuilder = ({
+  reduxState: { ingredients, error },
+  reduxActions: { onInitIngredients },
+}) => {
   const history = useHistory();
   const [disabledButtonsInfo, setDisabledButtonsInfo] = useState({});
   const [purchasable, setPurchasable] = useState(false);
   const [purchasing, setPurchasing] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!ingredients) onInitIngredients();
+  }, []);
 
   useEffect(() => {
     setDisabledButtonsInfo(() => {
@@ -51,8 +59,12 @@ const BurgerBuilder = ({ reduxState: { ingredients } }) => {
   };
 
   const orderSummaryHelper = () =>
-    loading ? (
-      <Spinner />
+    loading || !ingredients ? (
+      error ? (
+        <p>Ingredients can't be loaded</p>
+      ) : (
+        <Spinner />
+      )
     ) : (
       <OrderSummary close={closePurchaseModal} purchase={purchaseHandler} />
     );
@@ -72,6 +84,8 @@ const BurgerBuilder = ({ reduxState: { ingredients } }) => {
           />
         </BurgerBuilderContext.Provider>
       </>
+    ) : error ? (
+      <p>Ingredients can't be loaded</p>
     ) : (
       <Spinner />
     );
@@ -86,8 +100,17 @@ const BurgerBuilder = ({ reduxState: { ingredients } }) => {
   );
 };
 
-const mapStateToProps = ({ ingredients: { ingredients } }) => ({
-  reduxState: { ingredients: ingredients },
+const mapStateToProps = ({ ingredientsReducer: { ingredients, error } }) => ({
+  reduxState: { ingredients: ingredients, error: error },
 });
 
-export default connect(mapStateToProps)(withErrorHandler(BurgerBuilder, axios));
+const mapDispatchToProps = (dispatch) => ({
+  reduxActions: {
+    onInitIngredients: () => dispatch(initIngredients()),
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(BurgerBuilder, axios));

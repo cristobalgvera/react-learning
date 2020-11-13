@@ -7,16 +7,19 @@ import { Burger as BurgerStyle } from "./Burger.module.scss";
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 
 const Burger = ({ reduxState: { ingredients } }) => {
-  let ingredientsTags = Object.keys(ingredients)
-    .map((ingredient) =>
-      [...Array(+ingredients[ingredient])].map((_, i) => (
-        <BurgerIngredient
-          key={`${ingredient}_${i}`}
-          ingredient={capitalize(ingredient)}
-        />
-      ))
-    )
-    .reduce((previous, current) => previous.concat(current), []);
+  let ingredientsTags = [];
+  if (ingredients) {
+    ingredientsTags = Object.keys(ingredients)
+      .map((ingredient) =>
+        [...Array(+ingredients[ingredient])].map((_, i) => (
+          <BurgerIngredient
+            key={`${ingredient}_${i}`}
+            ingredient={capitalize(ingredient)}
+          />
+        ))
+      )
+      .reduce((previous, current) => previous.concat(current), []);
+  }
 
   if (ingredientsTags.length === 0)
     ingredientsTags = <p>Please add ingredients!</p>;
@@ -46,7 +49,7 @@ const capitalize = (phrase) => {
   return phrase.charAt(0).toUpperCase() + phrase.slice(1);
 };
 
-const mapStateToProps = ({ ingredients: { ingredients } }) => ({
+const mapStateToProps = ({ ingredientsReducer: { ingredients } }) => ({
   reduxState: { ingredients: ingredients },
 });
 

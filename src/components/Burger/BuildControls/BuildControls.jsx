@@ -47,8 +47,8 @@ const BuildControls = ({
 };
 
 const mapStateToProps = ({
-  ingredients: { ingredients },
-  price: { price },
+  ingredientsReducer: { ingredients },
+  priceReducer: { price },
 }) => ({
   reduxState: { ingredients: ingredients, price: price },
 });

@@ -26,6 +26,7 @@ const ContactData = ({
   const history = useHistory();
   const [contactData, setContactData] = useState({ ...initialContactData });
   const [loading, setLoading] = useState(false);
+  const [deliveryMethod, setDeliveryMethod] = useState("fastest");
 
   const handleFormChange = (property, value) => {
     let updatedContactData = { ...contactData };
@@ -45,24 +46,32 @@ const ContactData = ({
   const handleFormSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
+    if (!ingredients) {
+      window.alert(
+        "Invalid order, there are no ingredients, you'll be redirected"
+      );
+      history.push("/burger-builder");
+    }
+
     const data = {
       ingredients: ingredients,
       price: price,
       customer: contactData,
+      deliveryMethod: deliveryMethod,
     };
-    console.log(data);
 
-    axios
-      .post("/orders.json", data)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error))
-      .finally(() => {
-        if (window.confirm("Order ready!")) {
-          setLoading(false);
-          onCheckout();
-          history.push("/burger-builder");
-        }
-      });
+    ingredients &&
+      axios
+        .post("/orders.json", data)
+        .then((response) => console.log(response))
+        .catch((error) => console.log(error))
+        .finally(() => {
+          if (window.confirm("Order ready!")) {
+            setLoading(false);
+            onCheckout();
+            history.push("/burger-builder");
+          }
+        });
   };
 
   const {
@@ -103,6 +112,20 @@ const ContactData = ({
           value={postalCode}
           change={handleFormChange}
         />
+        <div>
+          <label htmlFor="deliveryMethod">
+            <strong>Delivery Method</strong>
+          </label>
+          <br />
+          <select
+            name="deliveryMethod"
+            value={deliveryMethod}
+            onChange={({ target: { value } }) => setDeliveryMethod(value)}
+          >
+            <option value="fastest">Fastest</option>
+            <option value="cheapest">Cheapest</option>
+          </select>
+        </div>
         <Button type="Success" clicked={handleFormSubmit}>
           ORDER
         </Button>
@@ -131,8 +154,8 @@ ContactData.propTypes = {
 };
 
 const mapStateToProps = ({
-  ingredients: { ingredients },
-  price: { price },
+  ingredientsReducer: { ingredients },
+  priceReducer: { price },
 }) => ({
   reduxState: { ingredients: ingredients, price: price },
 });

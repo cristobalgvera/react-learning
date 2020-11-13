@@ -40,7 +40,7 @@ CheckoutSummary.propTypes = {
   cancelled: func.isRequired,
 };
 
-const mapStateToProps = ({ ingredients: { ingredients } }) => ({
+const mapStateToProps = ({ ingredientsReducer: { ingredients } }) => ({
   reduxState: { ingredients: ingredients },
 });
 
