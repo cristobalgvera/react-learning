@@ -1,28 +1,16 @@
-import React, { useEffect, useState } from "react";
-import axios from "../../services/axios-orders";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { initOrders } from "../../store/actions/index";
 
 import Order from "../../components/Order/Order";
+import Spinner from "../../components/UI/Spinner/Spinner";
 
-const Orders = () => {
-  const [orders, setOrders] = useState();
-
+const Orders = ({
+  reduxState: { orders, error },
+  reduxActions: { onInitOrders },
+}) => {
   useEffect(() => {
-    const getOrders = async () => {
-      try {
-        const { data } = await axios.get("/orders.json");
-        return data;
-      } catch ({ message }) {
-        console.log(message);
-      }
-    };
-
-    getOrders()
-      .then((orders) => {
-        const _orders = [];
-        for (let order in orders) _orders.push({ ...orders[order], id: order });
-        setOrders(_orders);
-      })
-      .catch(({ message }) => console.log(message));
+    onInitOrders();
   }, []);
 
   const ordersList = () =>
@@ -39,12 +27,29 @@ const Orders = () => {
       );
     });
 
-  return (
-    <div>
-      <h1 style={{ textAlign: "center" }}>Orders</h1>
-      {orders && ordersList()}
-    </div>
-  );
+  const ordersHelper = () =>
+    !orders ? (
+      error ? (
+        <p>There was an error fetching orders :/</p>
+      ) : (
+        <Spinner />
+      )
+    ) : (
+      <div>
+        <h1 style={{ textAlign: "center" }}>Orders</h1>
+        {orders && ordersList()}
+      </div>
+    );
+
+  return ordersHelper();
 };
 
-export default Orders;
+const mapStateToProps = ({ ordersReducer: { orders, error } }) => ({
+  reduxState: { orders: orders, error: error },
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  reduxActions: { onInitOrders: () => dispatch(initOrders()) },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Orders);

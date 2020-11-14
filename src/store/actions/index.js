@@ -5,3 +5,4 @@ export {
   resetIngredients,
   initIngredients,
 } from "./ingredientsActions";
+export { initOrders } from "./ordersActions";
