@@ -1,5 +1,11 @@
-import ingredientsReducer from "./ingredientsReducer";
-import ordersReducer from "./ordersReducer";
-import priceReducer from "./priceReducer";
+import ingredientsReducer from './ingredientsReducer';
+import ordersReducer from './ordersReducer';
+import priceReducer from './priceReducer';
+import authReducer from './authReducer';
 
-export { ordersReducer, priceReducer, ingredientsReducer };
+export {
+    authReducer,
+    ordersReducer,
+    priceReducer,
+    ingredientsReducer,
+};

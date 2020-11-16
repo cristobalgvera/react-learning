@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import { NavigationItems as NavigationItemsStyle } from "./NavigationItems.module.scss";
+import { NavigationItems as NavigationItemsStyle } from './NavigationItems.module.scss';
 
-import NavigationItem from "./NavigationItem/NavigationItem";
+import NavigationItem from './NavigationItem/NavigationItem';
 
 const NavigationItems = () => (
-  <ul className={NavigationItemsStyle}>
-    <NavigationItem link="/burger-builder">Burger Builder</NavigationItem>
-    {/* <NavigationItem link="/checkout">Checkout</NavigationItem> */}
-    <NavigationItem link="/orders">Orders</NavigationItem>
-  </ul>
+    <ul className={NavigationItemsStyle}>
+        <NavigationItem link="/burger-builder">Burger Builder</NavigationItem>
+        <NavigationItem link="/orders">Orders</NavigationItem>
+        <NavigationItem link="/auth">Sign in</NavigationItem>
+    </ul>
 );
 
 export default NavigationItems;
