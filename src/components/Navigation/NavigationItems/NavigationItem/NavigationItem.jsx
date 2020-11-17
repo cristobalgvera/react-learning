@@ -1,23 +1,35 @@
-import React from "react";
-import PropTypes from "prop-types";
-
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import {
-  NavigationItem as NavigationItemStyle,
-  active,
-} from "./NavigationItem.module.scss";
-import { NavLink } from "react-router-dom";
+    NavigationItem as NavigationItemStyle,
+    active,
+} from './NavigationItem.module.scss';
 
-const NavigationItem = ({ link, children }) => (
-  <li className={NavigationItemStyle}>
-    <NavLink to={`${link}`} activeClassName={active}>
-      {children}
-    </NavLink>
-  </li>
-);
+const NavigationItem = ( { link, clicked, children } ) => {
+    const navLinkHelper = () => (
+        clicked ? (
+            <a style={{ cursor: 'pointer' }}>
+                {children}
+            </a>
+        ) : (
+            <NavLink to={`${link}`} activeClassName={active}>
+                {children}
+            </NavLink>
+        )
+    );
 
-const { string } = PropTypes;
+    return (
+        <li className={NavigationItemStyle} onClick={clicked}>
+            {navLinkHelper()}
+        </li>
+    );
+};
+
+const { string, func } = PropTypes;
 NavigationItem.propTypes = {
-  link: string.isRequired,
+    link: string.isRequired,
+    clicked: func,
 };
 
 export default NavigationItem;

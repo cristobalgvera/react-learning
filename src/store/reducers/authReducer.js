@@ -1,7 +1,7 @@
 import { AUTH_ACTIONS } from '../actions/actionTypes';
 import { updateState } from '../utility';
 
-const { AUTH_START, AUTH_FAIL, AUTH_SUCCESS } = AUTH_ACTIONS;
+const { AUTH_START, AUTH_FAIL, AUTH_SUCCESS, AUTH_LOGOUT } = AUTH_ACTIONS;
 
 const initialState = {
     loading: false,
@@ -18,6 +18,8 @@ const authReducer = ( state = initialState, { type, payload } ) => {
             return authSuccess(state, payload);
         case AUTH_FAIL:
             return authFail(state, payload);
+        case AUTH_LOGOUT:
+            return updateState(state, { ...initialState });
         default:
             return state;
     }

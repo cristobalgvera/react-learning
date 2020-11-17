@@ -3,22 +3,23 @@ import { connect } from 'react-redux';
 import Input from '../../components/UI/Form/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import { Auth as AuthStyle } from './Auth.module.scss';
-import { initAuthentication } from '../../store/actions/index';
+import { initAuthentication, authenticationLogout } from '../../store/actions/index';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 const initialCredential = {
     email: '',
     password: '',
 };
 
-const Auth = ( { reduxActions: { onInitAuthentication } } ) => {
+const Auth = (
+    {
+        reduxState: { error, loading, localId },
+        reduxActions: { onInitAuthentication, onLogout },
+    },
+) => {
     const [credential, setCredential] = useState(initialCredential);
     const [isSignUp, setIsSignUp] = useState(false);
     const { email, password } = credential;
-
-    const validateEmail = ( email ) => {
-        const regExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return regExp.test(email.toLowerCase());
-    };
 
     const handleChange = ( property, value ) => {
         setCredential(prevState => ({ ...prevState, [property]: value }));
@@ -26,47 +27,72 @@ const Auth = ( { reduxActions: { onInitAuthentication } } ) => {
 
     const handleSubmit = ( event ) => {
         event.preventDefault();
-        if (validateEmail(email))
-            onInitAuthentication(credential, isSignUp);
-        else console.log('Invalid credentials');
+        onInitAuthentication(credential, isSignUp);
     };
 
     const switchAuthModeHandler = () => {
         setIsSignUp(prevState => !prevState);
     };
 
+    const handleLogout = () => {
+        if (window.confirm('Are you sure you want to leave?'))
+            onLogout();
+    };
+
+    const form = () => (
+        !localId ? (
+            <>
+                <form>
+                    <Input
+                        type={'email'}
+                        name={'email'}
+                        placeholder={'Email'}
+                        value={email}
+                        change={handleChange}
+                    />
+                    <Input
+                        type={'password'}
+                        name={'password'}
+                        placeholder={'**********'}
+                        value={password}
+                        change={handleChange}
+                    />
+                    {error && <p>{error.message}</p>}
+                    <Button type={'Success'} clicked={handleSubmit}>
+                        SUBMIT
+                    </Button>
+                </form>
+                <Button type={'Danger'} clicked={switchAuthModeHandler}>
+                    SWITCH TO SIGN {isSignUp ? 'UP' : 'IN'}
+                </Button>
+            </>
+        ) : (
+            <Button type={'Danger'} clicked={handleLogout}>
+                LOGOUT
+            </Button>
+        )
+    );
+
     return (
         <div className={AuthStyle}>
-            <form>
-                <Input
-                    type={'email'}
-                    name={'email'}
-                    placeholder={'Email'}
-                    value={email}
-                    change={handleChange}
-                />
-                <Input
-                    type={'password'}
-                    name={'password'}
-                    placeholder={'**********'}
-                    value={password}
-                    change={handleChange}
-                />
-                <Button type={'Success'} clicked={handleSubmit}>
-                    SUBMIT
-                </Button>
-            </form>
-            <Button type={'Danger'} clicked={switchAuthModeHandler}>
-                SWITCH TO SIGN {isSignUp ? 'UP' : 'IN'}
-            </Button>
+            {loading ? <Spinner/> : form()}
         </div>
     );
 };
 
-const mapDispatchToProps = ( dispatch ) => ({
-    reduxActions: {
-        onInitAuthentication: ( credential, isSignUp ) => dispatch(initAuthentication(credential, isSignUp)),
+const mapStateToProps = ( { authReducer: { error, loading, localId } } ) => ({
+    reduxState: {
+        error: error,
+        loading: loading,
+        localId: localId,
     },
 });
 
-export default connect(null, mapDispatchToProps)(Auth);
+const mapDispatchToProps = ( dispatch ) => ({
+    reduxActions: {
+        onInitAuthentication: ( credential, isSignUp ) => dispatch(initAuthentication(credential, isSignUp)),
+        onLogout: () => dispatch(authenticationLogout()),
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

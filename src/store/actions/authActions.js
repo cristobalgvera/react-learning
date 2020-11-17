@@ -1,7 +1,7 @@
 import { AUTH_ACTIONS } from './actionTypes';
 import axios from '../../services/axios-orders';
 
-const { AUTH_FAIL, AUTH_START, AUTH_SUCCESS } = AUTH_ACTIONS;
+const { AUTH_FAIL, AUTH_START, AUTH_SUCCESS, AUTH_LOGOUT } = AUTH_ACTIONS;
 const apiKey = 'AIzaSyCm6jomIaSVjN9WR7muaU-hOgRminSRVPY';
 
 const authenticationSucceeded = ( authentication ) => ({
@@ -13,6 +13,12 @@ const authenticationFailed = ( error ) => ({ type: AUTH_FAIL, payload: { error: 
 
 const authenticationStart = () => ({ type: AUTH_START });
 
+const authenticationLogout = () => ({ type: AUTH_LOGOUT });
+
+const checkAuthTimeout = ( expirationTime ) => ( dispatch ) => {
+    setTimeout(() => dispatch(authenticationLogout()), expirationTime * 1000);
+};
+
 const initAuthentication = ( credential, method ) => ( dispatch ) => {
     dispatch(authenticationStart());
     const updatedCredential = { ...credential, returnSecureToken: true };
@@ -22,10 +28,10 @@ const initAuthentication = ( credential, method ) => ( dispatch ) => {
 
     axios.post(url, updatedCredential)
         .then(( { data: authentication } ) => {
-            console.log(authentication);
-            return dispatch(authenticationSucceeded(authentication));
+            dispatch(authenticationSucceeded(authentication));
+            dispatch(checkAuthTimeout(authentication.expiresIn));
         })
-        .catch(error => dispatch(authenticationFailed(error)));
+        .catch(( { response: { data: { error } } } ) => dispatch(authenticationFailed(error)));
 };
 
-export { initAuthentication };
+export { initAuthentication, authenticationLogout };

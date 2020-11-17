@@ -1,18 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 
-import { DrawerToggle as DrawerToggleStyle } from "./DrawerToggle.module.scss";
+import { DrawerToggle as DrawerToggleStyle } from './DrawerToggle.module.scss';
 
-import WillBeClickedContext from "../../../../context/WillBeClickedContext/WillBeClickedContext";
+import WillBeClickedContext from '../../../../context/WillBeClickedContext/WillBeClickedContext';
 
 const DrawerToggle = () => {
-  const { clicked } = useContext(WillBeClickedContext);
-  return (
-    <div className={DrawerToggleStyle} onClick={() => clicked()}>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  );
+    const { clicked } = useContext(WillBeClickedContext);
+    return (
+        <div className={DrawerToggleStyle} onClick={() => clicked()}>
+            <div/>
+            <div/>
+            <div/>
+        </div>
+    );
 };
 
 export default DrawerToggle;

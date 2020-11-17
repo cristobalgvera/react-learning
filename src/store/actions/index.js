@@ -6,4 +6,4 @@ export {
     initIngredients,
 } from './ingredientsActions';
 export { initOrders } from './ordersActions';
-export { initAuthentication } from './authActions';
+export { initAuthentication, authenticationLogout } from './authActions';
