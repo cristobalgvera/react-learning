@@ -5,6 +5,7 @@ import Button from '../../components/UI/Button/Button';
 import { Auth as AuthStyle } from './Auth.module.scss';
 import { initAuthentication, authenticationLogout } from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import { Redirect } from 'react-router-dom';
 
 const initialCredential = {
     email: '',
@@ -18,7 +19,7 @@ const Auth = (
     },
 ) => {
     const [credential, setCredential] = useState(initialCredential);
-    const [isSignUp, setIsSignUp] = useState(false);
+    const [isSignUp, setIsSignUp] = useState(true);
     const { email, password } = credential;
 
     const handleChange = ( property, value ) => {
@@ -67,9 +68,7 @@ const Auth = (
                 </Button>
             </>
         ) : (
-            <Button type={'Danger'} clicked={handleLogout}>
-                LOGOUT
-            </Button>
+            <Redirect to={'/burger-builder'}/>
         )
     );
 

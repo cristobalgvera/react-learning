@@ -1,7 +1,6 @@
 import React from 'react';
-
+import { useHistory } from 'react-router-dom';
 import { NavigationItems as NavigationItemsStyle } from './NavigationItems.module.scss';
-
 import NavigationItem from './NavigationItem/NavigationItem';
 import { connect } from 'react-redux';
 import { authenticationLogout } from '../../../store/actions';
@@ -12,9 +11,13 @@ const NavigationItems = (
         reduxActions: { onLogout },
     },
 ) => {
+    const history = useHistory();
+
     const logoutHandler = () => {
-        if (window.confirm('Are you sure you want to leave?'))
+        if (window.confirm('Are you sure you want to leave?')) {
             onLogout();
+            history.push('/burger-builder');
+        }
     };
 
     const loginMessage = () => (
@@ -28,8 +31,8 @@ const NavigationItems = (
     return (
         <ul className={NavigationItemsStyle}>
             <NavigationItem link="/burger-builder">Burger Builder</NavigationItem>
-            <NavigationItem link="/orders">Orders</NavigationItem>
-            <NavigationItem link="/auth" clicked={localId && logoutHandler}>{loginMessage()}</NavigationItem>
+            {localId && <NavigationItem link="/orders">Orders</NavigationItem>}
+            <NavigationItem link="/sign-in" clicked={localId && logoutHandler}>{loginMessage()}</NavigationItem>
         </ul>
     );
 };

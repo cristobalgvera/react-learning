@@ -6,7 +6,7 @@ const { AUTH_START, AUTH_FAIL, AUTH_SUCCESS, AUTH_LOGOUT } = AUTH_ACTIONS;
 const initialState = {
     loading: false,
     error: null,
-    token: null,
+    idToken: null,
     localId: null,
 };
 
@@ -30,7 +30,7 @@ const authSuccess = ( state, payload ) => {
     return updateState(state,
         {
             ...initialState,
-            token: idToken,
+            idToken: idToken,
             localId: localId,
         },
     );

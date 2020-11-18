@@ -11,9 +11,9 @@ const App = () => (
     <BrowserRouter>
         <Layout>
             <Switch>
-                <Route path="/checkout" component={Checkout}/>
-                <Route path="/burger-builder" component={BurgerBuilder} exact/>
-                <Route path="/auth" component={Auth}/>
+                <Route path="/burger-builder/checkout" component={Checkout}/>
+                <Route path="/burger-builder" component={BurgerBuilder}/>
+                <Route path="/sign-in" component={Auth}/>
                 <Route path="/orders" component={Orders} exact/>
                 <Redirect to="/burger-builder"/>
             </Switch>

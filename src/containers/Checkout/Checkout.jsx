@@ -8,7 +8,7 @@ const Checkout = ({ reduxState: { ingredients } }) => {
   const { url } = useRouteMatch();
   const history = useHistory();
 
-  const cancelledChekoutHandler = () => {
+  const cancelledCheckoutHandler = () => {
     history.goBack();
   };
 
@@ -24,7 +24,7 @@ const Checkout = ({ reduxState: { ingredients } }) => {
   return (
     <>
       <CheckoutSummary
-        cancelled={cancelledChekoutHandler}
+        cancelled={cancelledCheckoutHandler}
         continued={continuedCheckoutHandler}
       />
       <Route path={`${url}/contact-data`} component={ContactData} />

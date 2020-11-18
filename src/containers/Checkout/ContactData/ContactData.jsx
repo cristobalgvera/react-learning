@@ -19,10 +19,16 @@ const initialContactData = {
     },
 };
 
-const ContactData = ( {
-                          reduxState: { ingredients, price },
-                          reduxActions: { onCheckout },
-                      } ) => {
+const ContactData = (
+    {
+        reduxState: {
+            ingredients,
+            price,
+            idToken,
+        },
+        reduxActions: { onCheckout },
+    },
+) => {
     const history = useHistory();
     const [contactData, setContactData] = useState({ ...initialContactData });
     const [loading, setLoading] = useState(false);
@@ -32,7 +38,6 @@ const ContactData = ( {
         let updatedContactData = { ...contactData };
 
         if (!Object.keys(updatedContactData).includes(property)) {
-            updatedContactData = { ...updatedContactData['address'] };
             setContactData(( { ...prevState } ) => ({
                 ...prevState,
                 address: { ...prevState['address'], [property]: value },
@@ -53,25 +58,32 @@ const ContactData = ( {
             history.push('/burger-builder');
         }
 
-        const data = {
-            ingredients: ingredients,
-            price: price,
-            customer: contactData,
-            deliveryMethod: deliveryMethod,
-        };
+        if (idToken) {
+            const data = {
+                ingredients: ingredients,
+                price: price,
+                customer: contactData,
+                deliveryMethod: deliveryMethod,
+            };
 
-        ingredients &&
-        axios
-            .post('/orders.json', data)
-            .then(( response ) => console.log(response))
-            .catch(( error ) => console.log(error))
-            .finally(() => {
-                if (window.confirm('Order ready!')) {
-                    setLoading(false);
-                    onCheckout();
-                    history.push('/burger-builder');
-                }
-            });
+            ingredients &&
+            axios
+                .post('/orders.json', data)
+                .then(( response ) => console.log(response))
+                .catch(( error ) => console.log(error))
+                .finally(() => {
+                    if (window.confirm('Order ready!')) {
+                        setLoading(false);
+                        onCheckout();
+                        history.push('/burger-builder');
+                    }
+                });
+        } else {
+            if (window.confirm('You must be logged, wanna log in?'))
+                history.push('/sign-in');
+
+            setLoading(false);
+        }
     };
 
     const {
@@ -153,10 +165,13 @@ ContactData.propTypes = {
     }).isRequired,
 };
 
-const mapStateToProps = ( {
-                              ingredientsReducer: { ingredients },
-                              priceReducer: { price },
-                          } ) => ({
+const mapStateToProps = (
+    {
+        ingredientsReducer: { ingredients },
+        priceReducer: { price },
+        authReducer: { idToken },
+    },
+) => ({
     reduxState: { ingredients: ingredients, price: price },
 });
 
