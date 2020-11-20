@@ -1,5 +1,8 @@
 import { AUTH_ACTIONS } from './actionTypes';
 import axios from '../../services/axios-orders';
+import { LOCAL_STORAGE } from '../constant';
+
+const { EXPIRATION_DATE, ID_TOKEN, LOCAL_ID } = LOCAL_STORAGE;
 
 const { AUTH_FAIL, AUTH_START, AUTH_SUCCESS, AUTH_LOGOUT } = AUTH_ACTIONS;
 const apiKey = 'AIzaSyCm6jomIaSVjN9WR7muaU-hOgRminSRVPY';
@@ -15,8 +18,47 @@ const authenticationStart = () => ({ type: AUTH_START });
 
 const authenticationLogout = () => ({ type: AUTH_LOGOUT });
 
-const checkAuthTimeout = ( expirationTime ) => ( dispatch ) => {
-    setTimeout(() => dispatch(authenticationLogout()), expirationTime * 1000);
+
+const setAuthenticationTimeout = ( expirationTime ) => ( dispatch ) => {
+    setTimeout(() => dispatch(handleAuthenticationLogout()), expirationTime * 1000);
+};
+
+const handleAuthenticationLogout = () => {
+    unstoreAuthentication();
+    return authenticationLogout();
+};
+
+const storeAuthentication = ( { idToken, expiresIn, localId } ) => {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000).toISOString();
+
+    localStorage.setItem(ID_TOKEN, idToken);
+    localStorage.setItem(EXPIRATION_DATE, expirationDate);
+    localStorage.setItem(LOCAL_ID, localId);
+};
+
+const unstoreAuthentication = () => {
+    localStorage.removeItem(ID_TOKEN);
+    localStorage.removeItem(EXPIRATION_DATE);
+    localStorage.removeItem(LOCAL_ID);
+};
+
+const checkAuthState = () => ( dispatch ) => {
+    const idToken = localStorage.getItem(ID_TOKEN);
+    if (idToken) {
+        const expirationDate = new Date(localStorage.getItem(EXPIRATION_DATE));
+        if (expirationDate > new Date()) {
+            const localId = localStorage.getItem(LOCAL_ID);
+            const expiresIn = expirationDate.getTime() - new Date().getTime();
+            dispatch(authenticationSucceeded({
+                idToken: idToken,
+                localId: localId,
+            }));
+            dispatch(setAuthenticationTimeout(expiresIn / 1000));
+            return;
+        }
+    }
+
+    dispatch(handleAuthenticationLogout());
 };
 
 const initAuthentication = ( credential, method ) => ( dispatch ) => {
@@ -28,10 +70,11 @@ const initAuthentication = ( credential, method ) => ( dispatch ) => {
 
     axios.post(url, updatedCredential)
         .then(( { data: authentication } ) => {
+            storeAuthentication(authentication);
             dispatch(authenticationSucceeded(authentication));
-            dispatch(checkAuthTimeout(authentication.expiresIn));
+            dispatch(setAuthenticationTimeout(authentication.expiresIn));
         })
         .catch(( { response: { data: { error } } } ) => dispatch(authenticationFailed(error)));
 };
 
-export { initAuthentication, authenticationLogout };
+export { initAuthentication, handleAuthenticationLogout, checkAuthState };

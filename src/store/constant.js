@@ -1,0 +1,7 @@
+const LOCAL_STORAGE = {
+    ID_TOKEN: 'ID_TOKEN',
+    EXPIRATION_DATE: 'EXPIRATION_DATE',
+    LOCAL_ID: 'LOCAL_ID',
+};
+
+export { LOCAL_STORAGE };

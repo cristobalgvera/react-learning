@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Input from '../../components/UI/Form/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import { Auth as AuthStyle } from './Auth.module.scss';
-import { initAuthentication, authenticationLogout } from '../../store/actions/index';
+import { initAuthentication, handleAuthenticationLogout } from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
 
@@ -33,11 +33,6 @@ const Auth = (
 
     const switchAuthModeHandler = () => {
         setIsSignUp(prevState => !prevState);
-    };
-
-    const handleLogout = () => {
-        if (window.confirm('Are you sure you want to leave?'))
-            onLogout();
     };
 
     const form = () => (
@@ -90,7 +85,7 @@ const mapStateToProps = ( { authReducer: { error, loading, localId } } ) => ({
 const mapDispatchToProps = ( dispatch ) => ({
     reduxActions: {
         onInitAuthentication: ( credential, isSignUp ) => dispatch(initAuthentication(credential, isSignUp)),
-        onLogout: () => dispatch(authenticationLogout()),
+        onLogout: () => dispatch(handleAuthenticationLogout()),
     },
 });
 

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { NavigationItems as NavigationItemsStyle } from './NavigationItems.module.scss';
 import NavigationItem from './NavigationItem/NavigationItem';
 import { connect } from 'react-redux';
-import { authenticationLogout } from '../../../store/actions';
+import { handleAuthenticationLogout } from '../../../store/actions';
 
 const NavigationItems = (
     {
@@ -43,7 +43,7 @@ const mapStateToProps = ( { authReducer: { localId } } ) => ({
 
 const mapDispatchToProps = ( dispatch ) => ({
     reduxActions: {
-        onLogout: () => dispatch(authenticationLogout()),
+        onLogout: () => dispatch(handleAuthenticationLogout()),
     },
 });
 

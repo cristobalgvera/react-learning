@@ -25,7 +25,7 @@ const BurgerBuilder = ( {
 
     useEffect(() => {
         if (!ingredients) onInitIngredients();
-    }, []);
+    }, [onInitIngredients, ingredients]);
 
     useEffect(() => {
         setDisabledButtonsInfo(() => {

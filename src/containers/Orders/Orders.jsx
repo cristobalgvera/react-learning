@@ -9,9 +9,7 @@ const Orders = ( {
                      reduxState: { orders, error, idToken },
                      reduxActions: { onInitOrders },
                  } ) => {
-    useEffect(() => {
-        onInitOrders(idToken);
-    }, []);
+    useEffect(() => onInitOrders(idToken), [onInitOrders, idToken]);
 
     const ordersList = () =>
         orders.map(( order ) => {

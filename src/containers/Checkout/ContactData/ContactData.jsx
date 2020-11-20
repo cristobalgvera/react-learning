@@ -172,7 +172,7 @@ const mapStateToProps = (
         authReducer: { idToken },
     },
 ) => ({
-    reduxState: { ingredients: ingredients, price: price },
+    reduxState: { ingredients: ingredients, price: price, idToken },
 });
 
 const mapDispatchToProps = ( dispatch ) => ({
