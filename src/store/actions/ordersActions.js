@@ -10,9 +10,9 @@ const setOrders = ( orders ) => ({
 
 const fetchOrdersFailed = () => ({ type: FETCH_ORDERS_FAIL });
 
-const initOrders = (idToken) => ( dispatch ) => {
-    axios
-        .get(`/orders.json?auth=${idToken}`)
+const initOrders = ( idToken, localId ) => ( dispatch ) => {
+    const queryParams = `?auth=${idToken}&orderBy="localId"&equalTo="${localId}"`;
+    axios.get(`/orders.json${queryParams}`)
         .then(( { data: orders } ) => {
             const _orders = [];
             for (let order in orders) _orders.push({ ...orders[order], id: order });

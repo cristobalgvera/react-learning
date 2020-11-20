@@ -5,25 +5,38 @@ import { initOrders } from '../../store/actions/index';
 import Order from '../../components/Order/Order';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
-const Orders = ( {
-                     reduxState: { orders, error, idToken },
-                     reduxActions: { onInitOrders },
-                 } ) => {
-    useEffect(() => onInitOrders(idToken), [onInitOrders, idToken]);
+const Orders = (
+    {
+        reduxState: {
+            orders,
+            error,
+            idToken,
+            localId,
+        },
+        reduxActions: { onInitOrders },
+    },
+) => {
+    useEffect(() => onInitOrders(idToken, localId), [onInitOrders, idToken]);
 
-    const ordersList = () =>
-        orders.map(( order ) => {
-            const { customer, ingredients, price, deliveryMethod, id } = order;
-            return (
-                <Order
-                    key={id}
-                    customer={customer}
-                    deliveryMethod={deliveryMethod}
-                    price={price}
-                    ingredients={ingredients}
-                />
-            );
-        });
+    const ordersList = () => (
+        orders.length > 0 ? (
+            orders.map(( order ) => {
+                const { customer, ingredients, price, deliveryMethod, id } = order;
+                return (
+                    <Order
+                        key={id}
+                        customer={customer}
+                        deliveryMethod={deliveryMethod}
+                        price={price}
+                        ingredients={ingredients}
+                    />
+                );
+
+            })
+        ) : (
+            <p>You have no orders ;)</p>
+        )
+    );
 
     const ordersHelper = () =>
         !orders ? (
@@ -46,16 +59,19 @@ const Orders = ( {
     );
 };
 
-const mapStateToProps = ( { ordersReducer: { orders, error }, authReducer: { idToken } } ) => ({
+const mapStateToProps = ( { ordersReducer: { orders, error }, authReducer: { idToken, localId } } ) => ({
     reduxState: {
-        orders: orders,
-        error: error,
-        idToken: idToken,
+        orders,
+        error,
+        localId,
+        idToken,
     },
 });
 
 const mapDispatchToProps = ( dispatch ) => ({
-    reduxActions: { onInitOrders: ( idToken ) => dispatch(initOrders(idToken)) },
+    reduxActions: {
+        onInitOrders: ( idToken, localId ) => dispatch(initOrders(idToken, localId)),
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Orders);

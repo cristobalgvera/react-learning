@@ -18,22 +18,28 @@ const App = ( { reduxState: { authenticated }, reduxActions: { onCheckAuthState 
     }, [onCheckAuthState]);
 
     const isAuthenticated = () => (
-        <>
-            <Route path="/burger-builder/checkout" component={Checkout}/>
-            <Route path="/orders" component={Orders} exact/>
-        </>
+            <Switch>
+                <Route path="/burger-builder" component={BurgerBuilder} exact/>
+                <Route path="/burger-builder/checkout" component={Checkout}/>;
+                <Route path="/orders" component={Orders} exact/>;
+                <Redirect to="/burger-builder"/>
+            </Switch>
+        )
+    ;
+
+    const notAuthenticated = () => (
+        <Switch>
+            <Route path="/burger-builder" component={BurgerBuilder} exact/>
+            <Route path="/sign-in" component={Auth}/>
+            <Redirect to="/burger-builder"/>
+        </Switch>
     );
 
     return (
         <BrowserRouter>
             {!loading &&
             <Layout>
-                <Switch>
-                    <Route path="/burger-builder" component={BurgerBuilder} exact/>
-                    {authenticated && isAuthenticated()}
-                    <Route path="/sign-in" component={Auth}/>
-                    <Redirect to="/burger-builder"/>
-                </Switch>
+                {authenticated ? isAuthenticated() : notAuthenticated()}
             </Layout>
             }
         </BrowserRouter>

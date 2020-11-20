@@ -15,7 +15,7 @@ const initialCredential = {
 const Auth = (
     {
         reduxState: { error, loading, localId },
-        reduxActions: { onInitAuthentication, onLogout },
+        reduxActions: { onInitAuthentication },
     },
 ) => {
     const [credential, setCredential] = useState(initialCredential);
@@ -76,16 +76,15 @@ const Auth = (
 
 const mapStateToProps = ( { authReducer: { error, loading, localId } } ) => ({
     reduxState: {
-        error: error,
-        loading: loading,
-        localId: localId,
+        error,
+        loading,
+        localId,
     },
 });
 
 const mapDispatchToProps = ( dispatch ) => ({
     reduxActions: {
         onInitAuthentication: ( credential, isSignUp ) => dispatch(initAuthentication(credential, isSignUp)),
-        onLogout: () => dispatch(handleAuthenticationLogout()),
     },
 });
 

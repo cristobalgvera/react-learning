@@ -25,6 +25,7 @@ const ContactData = (
             ingredients,
             price,
             idToken,
+            localId,
         },
         reduxActions: { onCheckout },
     },
@@ -64,11 +65,12 @@ const ContactData = (
                 price: price,
                 customer: contactData,
                 deliveryMethod: deliveryMethod,
+                localId: localId,
             };
 
             ingredients &&
             axios
-                .post('/orders.json', data)
+                .post(`/orders.json?auth=${idToken}`, data)
                 .then(( response ) => console.log(response))
                 .catch(( error ) => console.log(error))
                 .finally(() => {
@@ -169,10 +171,15 @@ const mapStateToProps = (
     {
         ingredientsReducer: { ingredients },
         priceReducer: { price },
-        authReducer: { idToken },
+        authReducer: { idToken, localId },
     },
 ) => ({
-    reduxState: { ingredients: ingredients, price: price, idToken },
+    reduxState: {
+        ingredients,
+        price,
+        idToken,
+        localId,
+    },
 });
 
 const mapDispatchToProps = ( dispatch ) => ({
