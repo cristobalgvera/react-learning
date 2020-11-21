@@ -36,7 +36,7 @@ export const NavigationItems = (
     return (
         <ul className={NavigationItemsStyle}>
             <NavigationItem link={BURGER_BUILDER}>Burger Builder</NavigationItem>
-            {localId && <NavigationItem link={ORDERS}>Orders</NavigationItem>}
+            {localId && <NavigationItem link={ORDERS}>My Orders</NavigationItem>}
             <NavigationItem link={SIGN_IN} clicked={localId && logoutHandler}>{loginMessage()}</NavigationItem>
         </ul>
     );

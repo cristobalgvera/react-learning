@@ -78,7 +78,7 @@ const ContactData = (
                 .then(( response ) => console.log(response))
                 .catch(( error ) => console.log(error))
                 .finally(() => {
-                    if (window.confirm('Order ready!')) {
+                    if (window.alert('Order ready!') || true) {
                         setLoading(false);
                         onCheckout();
                         history.push(BURGER_BUILDER);
