@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, useHistory, useRouteMatch } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import CheckoutSummary from '../../components/Burger/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
+import { BURGER_BUILDER, CONTACT_DATA } from '../../components/Routes/path/path';
 
 const Checkout = ( { reduxState: { ingredients } } ) => {
-    const { url } = useRouteMatch();
     const history = useHistory();
 
     const cancelledCheckoutHandler = () => {
@@ -16,9 +16,9 @@ const Checkout = ( { reduxState: { ingredients } } ) => {
         const areEnoughIngredients =
             ingredients &&
             Object.values(ingredients).reduce(( acc, cur ) => acc + cur, 0) > 0;
-        if (areEnoughIngredients) history.replace(`${url}/contact-data`);
+        if (areEnoughIngredients) history.replace(CONTACT_DATA);
         else if (window.confirm('Add some ingredients!'))
-            history.push('/burger-builder');
+            history.push(BURGER_BUILDER);
     };
 
     return (
@@ -27,7 +27,7 @@ const Checkout = ( { reduxState: { ingredients } } ) => {
                 cancelled={cancelledCheckoutHandler}
                 continued={continuedCheckoutHandler}
             />
-            <Route path={`${url}/contact-data`} component={ContactData}/>
+            <Route path={CONTACT_DATA} component={ContactData}/>
         </>
     );
 };

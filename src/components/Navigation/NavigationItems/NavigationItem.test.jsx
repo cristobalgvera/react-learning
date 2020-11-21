@@ -3,6 +3,7 @@ import { configure, shallow } from 'enzyme';
 import ReactSeventeenAdapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { NavigationItems } from './NavigationItems';
 import NavigationItem from './NavigationItem/NavigationItem';
+import { ORDERS } from '../../Routes/path/path';
 
 configure({ adapter: new ReactSeventeenAdapter() });
 
@@ -24,7 +25,7 @@ describe('<NavigationItems />', () => {
 
     it('should not render <NavigationItem /> elements with orders route if not authenticated', () => {
         expect(!wrapper.contains(
-            <NavigationItem link={'/orders'}>
+            <NavigationItem link={ORDERS}>
                 Orders
             </NavigationItem>),
         ).toBeTruthy();

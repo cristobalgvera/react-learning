@@ -20,7 +20,7 @@ const authReducer = ( state = initialState, { type, payload } ) => {
         case AUTH_FAIL:
             return authFail(state, payload);
         case AUTH_LOGOUT:
-            return updateState(state, { ...initialState });
+            return authLogout(state);
         case LOCAL_AUTH_CHECKED:
             return updateState(state, { checked: true });
         default:
@@ -28,11 +28,14 @@ const authReducer = ( state = initialState, { type, payload } ) => {
     }
 };
 
+const authLogout = ( state ) => updateState(state, updateState(initialState, { checked: true }));
+
 const authSuccess = ( state, payload ) => {
     const { authentication: { idToken, localId } } = payload;
     return updateState(state, updateState(initialState, {
             idToken: idToken,
             localId: localId,
+            checked: true,
         }),
     );
 };
@@ -41,6 +44,7 @@ const authFail = ( state, payload ) => {
     const { error } = payload;
     return updateState(state, updateState(initialState, {
             error: error,
+            checked: true,
         }),
     );
 };

@@ -10,6 +10,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Form/Input/Input';
 import { resetPrice, resetIngredients } from '../../../store/actions/index';
 import { updateState } from '../../../shared/utility';
+import { BURGER_BUILDER, SIGN_IN } from '../../../components/Routes/path/path';
 
 const initialContactData = {
     name: '',
@@ -59,7 +60,7 @@ const ContactData = (
             window.alert(
                 'Invalid order, there are no ingredients, you\'ll be redirected',
             );
-            history.push('/burger-builder');
+            history.push(BURGER_BUILDER);
         }
 
         if (idToken) {
@@ -80,12 +81,12 @@ const ContactData = (
                     if (window.confirm('Order ready!')) {
                         setLoading(false);
                         onCheckout();
-                        history.push('/burger-builder');
+                        history.push(BURGER_BUILDER);
                     }
                 });
         } else {
             if (window.confirm('You must be logged, wanna log in?'))
-                history.push('/sign-in');
+                history.push(SIGN_IN);
 
             setLoading(false);
         }

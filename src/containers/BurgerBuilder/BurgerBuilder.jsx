@@ -12,6 +12,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { useHistory } from 'react-router-dom';
 import { initIngredients } from '../../store/actions/index';
+import { CHECKOUT } from '../../components/Routes/path/path';
 
 export const BurgerBuilder = (
     {
@@ -56,7 +57,7 @@ export const BurgerBuilder = (
     };
 
     const purchaseHandler = () => {
-        history.push('/burger-builder/checkout');
+        history.push(CHECKOUT);
         setLoading(true);
     };
 

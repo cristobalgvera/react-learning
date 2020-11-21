@@ -9,6 +9,7 @@ import {
 import BuildControl from './BuildControl/BuildControl';
 import { calculatePrice } from '../../../store/actions/index';
 import { useHistory } from 'react-router-dom';
+import { SIGN_IN } from '../../Routes/path/path';
 
 const BuildControls = (
     {
@@ -29,7 +30,7 @@ const BuildControls = (
 
     const summarizeHandler = () => {
         if (localId) return summarize();
-        else history.push('/sign-in');
+        else history.push(SIGN_IN);
     };
 
     return (

@@ -7,6 +7,7 @@ import { initAuthentication } from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
 import { updateState } from '../../shared/utility';
+import { BURGER_BUILDER } from '../../components/Routes/path/path';
 
 const initialCredential = {
     email: '',
@@ -67,7 +68,7 @@ const Auth = (
                 </Button>
             </>
         ) : (
-            <Redirect to={'/burger-builder'}/>
+            <Redirect to={BURGER_BUILDER}/>
         )
     );
 

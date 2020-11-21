@@ -4,6 +4,11 @@ import { NavigationItems as NavigationItemsStyle } from './NavigationItems.modul
 import NavigationItem from './NavigationItem/NavigationItem';
 import { connect } from 'react-redux';
 import { handleAuthenticationLogout } from '../../../store/actions';
+import {
+    BURGER_BUILDER,
+    ORDERS,
+    SIGN_IN,
+} from '../../Routes/path/path';
 
 export const NavigationItems = (
     {
@@ -16,7 +21,7 @@ export const NavigationItems = (
     const logoutHandler = () => {
         if (window.confirm('Are you sure you want to leave?')) {
             onLogout();
-            history.push('/burger-builder');
+            history.push(BURGER_BUILDER);
         }
     };
 
@@ -30,9 +35,9 @@ export const NavigationItems = (
 
     return (
         <ul className={NavigationItemsStyle}>
-            <NavigationItem link="/burger-builder">Burger Builder</NavigationItem>
-            {localId && <NavigationItem link="/orders">Orders</NavigationItem>}
-            <NavigationItem link="/sign-in" clicked={localId && logoutHandler}>{loginMessage()}</NavigationItem>
+            <NavigationItem link={BURGER_BUILDER}>Burger Builder</NavigationItem>
+            {localId && <NavigationItem link={ORDERS}>Orders</NavigationItem>}
+            <NavigationItem link={SIGN_IN} clicked={localId && logoutHandler}>{loginMessage()}</NavigationItem>
         </ul>
     );
 };

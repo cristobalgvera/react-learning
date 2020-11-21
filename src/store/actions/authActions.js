@@ -44,7 +44,6 @@ const unstoreAuthentication = () => {
 };
 
 const checkAuthState = () => ( dispatch ) => {
-    console.log('CHECK-AUTH-STATE');
     const idToken = localStorage.getItem(ID_TOKEN);
     if (idToken) {
         const expirationDate = new Date(localStorage.getItem(EXPIRATION_DATE));
@@ -56,13 +55,10 @@ const checkAuthState = () => ( dispatch ) => {
                 localId: localId,
             }));
             dispatch(setAuthenticationTimeout(expiresIn / 1000));
-            dispatch(localAuthenticationChecked());
             return;
         }
     }
-
     dispatch(handleAuthenticationLogout());
-    dispatch(localAuthenticationChecked());
 };
 
 const initAuthentication = ( credential, method ) => ( dispatch ) => {
