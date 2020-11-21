@@ -13,7 +13,7 @@ const CheckoutSummary = ({
   continued,
 }) => (
   <div className={CheckoutSummaryStyle}>
-    <h1>Whe hope it taste well!</h1>
+    <h1>We hope it taste well!</h1>
     <div style={{ width: "100%", margin: "auto" }}>
       <Burger ingredients={ingredients} />
       <Button type="Danger" clicked={cancelled}>
