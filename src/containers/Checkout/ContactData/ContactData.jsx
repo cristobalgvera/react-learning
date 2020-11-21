@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Form/Input/Input';
 import { resetPrice, resetIngredients } from '../../../store/actions/index';
+import { updateState } from '../../../shared/utility';
 
 const initialContactData = {
     name: '',
@@ -39,14 +40,16 @@ const ContactData = (
         let updatedContactData = { ...contactData };
 
         if (!Object.keys(updatedContactData).includes(property)) {
-            setContactData(( { ...prevState } ) => ({
-                ...prevState,
-                address: { ...prevState['address'], [property]: value },
-            }));
+            setContactData(( prevState ) => updateState(prevState, {
+                    address: updateState(prevState['address'], {
+                        [property]: value,
+                    }),
+                }),
+            );
             return;
         }
 
-        setContactData(( { ...prevState } ) => ({ ...prevState, [property]: value }));
+        setContactData(( prevState ) => updateState(prevState, { [property]: value }));
     };
 
     const handleFormSubmit = ( event ) => {

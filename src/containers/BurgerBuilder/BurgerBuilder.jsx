@@ -13,10 +13,12 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { useHistory } from 'react-router-dom';
 import { initIngredients } from '../../store/actions/index';
 
-const BurgerBuilder = ( {
-                            reduxState: { ingredients, error },
-                            reduxActions: { onInitIngredients },
-                        } ) => {
+export const BurgerBuilder = (
+    {
+        reduxState: { ingredients, error },
+        reduxActions: { onInitIngredients },
+    },
+) => {
     const history = useHistory();
     const [disabledButtonsInfo, setDisabledButtonsInfo] = useState({});
     const [purchasable, setPurchasable] = useState(false);
@@ -36,11 +38,11 @@ const BurgerBuilder = ( {
         });
 
         setPurchasable(() => {
-            const addedIngredients = Object.values({ ...ingredients }).reduce(
-                ( totalIngredients, ingredientAmount ) =>
-                    (totalIngredients += ingredientAmount),
-                0,
-            );
+            const addedIngredients = Object.values({ ...ingredients })
+                .reduce(
+                    ( totalIngredients, ingredientAmount ) => totalIngredients + ingredientAmount,
+                    0,
+                );
             return addedIngredients > 0;
         });
     }, [ingredients]);

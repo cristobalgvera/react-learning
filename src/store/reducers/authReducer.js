@@ -1,9 +1,10 @@
 import { AUTH_ACTIONS } from '../actions/actionTypes';
-import { updateState } from '../utility';
+import { updateState } from '../../shared/utility';
 
-const { AUTH_START, AUTH_FAIL, AUTH_SUCCESS, AUTH_LOGOUT } = AUTH_ACTIONS;
+const { AUTH_START, AUTH_FAIL, AUTH_SUCCESS, AUTH_LOGOUT, LOCAL_AUTH_CHECKED } = AUTH_ACTIONS;
 
-const initialState = {
+export const initialState = {
+    checked: false,
     loading: false,
     error: null,
     idToken: null,
@@ -20,6 +21,8 @@ const authReducer = ( state = initialState, { type, payload } ) => {
             return authFail(state, payload);
         case AUTH_LOGOUT:
             return updateState(state, { ...initialState });
+        case LOCAL_AUTH_CHECKED:
+            return updateState(state, { checked: true });
         default:
             return state;
     }
@@ -27,22 +30,18 @@ const authReducer = ( state = initialState, { type, payload } ) => {
 
 const authSuccess = ( state, payload ) => {
     const { authentication: { idToken, localId } } = payload;
-    return updateState(state,
-        {
-            ...initialState,
+    return updateState(state, updateState(initialState, {
             idToken: idToken,
             localId: localId,
-        },
+        }),
     );
 };
 
 const authFail = ( state, payload ) => {
     const { error } = payload;
-    return updateState(state,
-        {
-            ...initialState,
+    return updateState(state, updateState(initialState, {
             error: error,
-        },
+        }),
     );
 };
 

@@ -1,5 +1,5 @@
 import { ORDERS_ACTIONS } from "../actions/actionTypes";
-import { updateState } from "../utility";
+import { updateState } from "../../shared/utility";
 
 const { FETCH_ORDERS_FAIL, SET_ORDERS } = ORDERS_ACTIONS;
 

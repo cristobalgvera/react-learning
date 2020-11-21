@@ -1,5 +1,5 @@
 import { PRICE_ACTIONS } from "../actions/actionTypes";
-import { updateState } from "../utility";
+import { updateState } from "../../shared/utility";
 
 const { CALCULATE_PRICE, RESET_PRICE } = PRICE_ACTIONS;
 

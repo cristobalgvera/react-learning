@@ -1,5 +1,5 @@
 import { INGREDIENTS_ACTIONS } from '../actions/actionTypes';
-import { updateState } from '../utility';
+import { updateState } from '../../shared/utility';
 
 const {
     ADD_INGREDIENT,

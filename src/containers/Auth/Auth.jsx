@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import Input from '../../components/UI/Form/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import { Auth as AuthStyle } from './Auth.module.scss';
-import { initAuthentication, handleAuthenticationLogout } from '../../store/actions/index';
+import { initAuthentication } from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
+import { updateState } from '../../shared/utility';
 
 const initialCredential = {
     email: '',
@@ -23,7 +24,10 @@ const Auth = (
     const { email, password } = credential;
 
     const handleChange = ( property, value ) => {
-        setCredential(prevState => ({ ...prevState, [property]: value }));
+        setCredential(prevState => updateState(prevState, {
+                [property]: value,
+            }),
+        );
     };
 
     const handleSubmit = ( event ) => {

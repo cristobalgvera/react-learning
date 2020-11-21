@@ -9,14 +9,14 @@ import WillBeClickedContext from "../../context/WillBeClickedContext/WillBeClick
 const Layout = ({ children }) => {
   const [showSideDrawer, setShowSideDrawer] = useState(false);
 
-  const sideDrawerToggleHanlder = () => {
+  const sideDrawerToggleHandler = () => {
     setShowSideDrawer((prevState) => !prevState);
   };
 
   return (
     <>
       <WillBeClickedContext.Provider
-        value={{ clicked: sideDrawerToggleHanlder }}
+        value={{ clicked: sideDrawerToggleHandler }}
       >
         <Toolbar />
         <SideDrawer show={showSideDrawer} />

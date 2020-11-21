@@ -5,7 +5,7 @@ import NavigationItem from './NavigationItem/NavigationItem';
 import { connect } from 'react-redux';
 import { handleAuthenticationLogout } from '../../../store/actions';
 
-const NavigationItems = (
+export const NavigationItems = (
     {
         reduxState: { localId },
         reduxActions: { onLogout },

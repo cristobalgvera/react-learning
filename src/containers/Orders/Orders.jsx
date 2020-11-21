@@ -16,7 +16,7 @@ const Orders = (
         reduxActions: { onInitOrders },
     },
 ) => {
-    useEffect(() => onInitOrders(idToken, localId), [onInitOrders, idToken]);
+    useEffect(() => onInitOrders(idToken, localId), [onInitOrders, idToken, localId]);
 
     const ordersList = () => (
         orders.length > 0 ? (

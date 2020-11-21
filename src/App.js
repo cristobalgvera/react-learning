@@ -1,54 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import Layout from './hoc/Layout/Layout';
-import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
-import Checkout from './containers/Checkout/Checkout';
-import Orders from './containers/Orders/Orders';
-import Auth from './containers/Auth/Auth';
-import { checkAuthState } from './store/actions/index';
+import Routes from './components/Routes/Routes';
+import { checkAuthState } from './store/actions';
 
-const App = ( { reduxState: { authenticated }, reduxActions: { onCheckAuthState } } ) => {
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        onCheckAuthState();
-        setLoading(false);
-    }, [onCheckAuthState]);
-
-    const isAuthenticated = () => (
-            <Switch>
-                <Route path="/burger-builder" component={BurgerBuilder} exact/>
-                <Route path="/burger-builder/checkout" component={Checkout}/>;
-                <Route path="/orders" component={Orders} exact/>;
-                <Redirect to="/burger-builder"/>
-            </Switch>
-        )
-    ;
-
-    const notAuthenticated = () => (
-        <Switch>
-            <Route path="/burger-builder" component={BurgerBuilder} exact/>
-            <Route path="/sign-in" component={Auth}/>
-            <Redirect to="/burger-builder"/>
-        </Switch>
-    );
+const App = ( { reduxState: { checked }, reduxActions: { onCheckAuthState } } ) => {
+    useEffect(() => onCheckAuthState(), [onCheckAuthState]);
 
     return (
         <BrowserRouter>
-            {!loading &&
             <Layout>
-                {authenticated ? isAuthenticated() : notAuthenticated()}
+                {checked && <Routes/>}
             </Layout>
-            }
         </BrowserRouter>
     );
 };
 
-const mapStateToProps = ( { authReducer: { idToken } } ) => ({
+const mapStateToProps = ( { authReducer: { checked } } ) => ({
     reduxState: {
-        authenticated: idToken != null,
+        checked,
     },
 });
 

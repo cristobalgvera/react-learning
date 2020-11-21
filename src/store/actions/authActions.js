@@ -1,10 +1,10 @@
 import { AUTH_ACTIONS } from './actionTypes';
 import axios from '../../services/axios-orders';
-import { LOCAL_STORAGE } from '../constant';
+import { LOCAL_STORAGE } from '../../shared/constant';
 
 const { EXPIRATION_DATE, ID_TOKEN, LOCAL_ID } = LOCAL_STORAGE;
 
-const { AUTH_FAIL, AUTH_START, AUTH_SUCCESS, AUTH_LOGOUT } = AUTH_ACTIONS;
+const { AUTH_FAIL, AUTH_START, AUTH_SUCCESS, AUTH_LOGOUT, LOCAL_AUTH_CHECKED } = AUTH_ACTIONS;
 const apiKey = 'AIzaSyCm6jomIaSVjN9WR7muaU-hOgRminSRVPY';
 
 const authenticationSucceeded = ( authentication ) => ({
@@ -18,6 +18,7 @@ const authenticationStart = () => ({ type: AUTH_START });
 
 const authenticationLogout = () => ({ type: AUTH_LOGOUT });
 
+const localAuthenticationChecked = () => ({ type: LOCAL_AUTH_CHECKED });
 
 const setAuthenticationTimeout = ( expirationTime ) => ( dispatch ) => {
     setTimeout(() => dispatch(handleAuthenticationLogout()), expirationTime * 1000);
@@ -43,6 +44,7 @@ const unstoreAuthentication = () => {
 };
 
 const checkAuthState = () => ( dispatch ) => {
+    console.log('CHECK-AUTH-STATE');
     const idToken = localStorage.getItem(ID_TOKEN);
     if (idToken) {
         const expirationDate = new Date(localStorage.getItem(EXPIRATION_DATE));
@@ -54,11 +56,13 @@ const checkAuthState = () => ( dispatch ) => {
                 localId: localId,
             }));
             dispatch(setAuthenticationTimeout(expiresIn / 1000));
+            dispatch(localAuthenticationChecked());
             return;
         }
     }
 
     dispatch(handleAuthenticationLogout());
+    dispatch(localAuthenticationChecked());
 };
 
 const initAuthentication = ( credential, method ) => ( dispatch ) => {
