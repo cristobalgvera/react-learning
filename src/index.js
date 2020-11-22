@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
 import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import {
@@ -13,6 +13,8 @@ import {
     priceReducer,
     authReducer,
 } from './store/reducers/index';
+import { handleAuthenticationLogoutSaga } from './sagas/authSagas';
+
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
@@ -22,9 +24,11 @@ const rootReducer = combineReducers({
     authReducer: authReducer,
 });
 
+const sagaMiddleware = createSagaMiddleware();
+
 const store = createStore(
     rootReducer,
-    composeEnhancers(applyMiddleware(thunk)),
+    composeEnhancers(applyMiddleware(thunk, sagaMiddleware)),
 );
 
 ReactDOM.render(
