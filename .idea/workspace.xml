@@ -19,22 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c98ec11-9f8c-4793-88b8-0dbca5101260" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/User/User.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/User/User.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/404.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/auth/index.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/index.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/hello.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Home.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" />
-    </list>
+    <list default="true" id="1c98ec11-9f8c-4793-88b8-0dbca5101260" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -129,7 +114,7 @@
       <option name="presentableId" value="Default" />
       <updated>1606013486021</updated>
       <workItem from="1606013488708" duration="15748000" />
-      <workItem from="1606029380482" duration="4428000" />
+      <workItem from="1606029380482" duration="4827000" />
     </task>
     <task id="LOCAL-00001" summary="project initialized without create-react-app">
       <created>1606015358221</created>
