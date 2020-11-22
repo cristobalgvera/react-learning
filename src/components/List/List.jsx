@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
-import './List.css';
+import styles from './List.module.css';
+import itemFadeAnimation from './ItemAnimation.module.css';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const List = () => {
     const [items, setItems] = useState([1, 2, 3]);
@@ -14,22 +16,24 @@ const List = () => {
     };
 
     const listItems = items.map(( item, index ) => (
-        <li
+        <CSSTransition
             key={index}
-            className="ListItem"
-            onClick={() => removeItemHandler(index)}
+            timeout={300}
+            classNames={{ ...itemFadeAnimation }}
         >
-            {item}
-        </li>
+            <li className={styles.ListItem} onClick={() => removeItemHandler(index)}>
+                {item}
+            </li>
+        </CSSTransition>
     ));
 
     return (
         <div>
             <button className="Button" onClick={addItemHandler}>Add Item</button>
             <p>Click Item to Remove.</p>
-            <ul className="List">
+            <TransitionGroup component={'ul'} className={styles.List}>
                 {listItems}
-            </ul>
+            </TransitionGroup>
         </div>
     );
 

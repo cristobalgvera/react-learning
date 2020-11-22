@@ -2,6 +2,7 @@ dependencies:
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
   react-scripts: 4.0.0
+  react-transition-group: 4.4.1_react-dom@17.0.1+react@17.0.1
 devDependencies:
   react-refresh: 0.9.0
 lockfileVersion: 5.2
@@ -3983,6 +3984,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-AZL67abkUzIuvcHqk7c09cezpGNcxUxU4Ioi/05xHk4DQeTkWmGYftIE6ctU6AEt+Gn4n1lDStOtj7FKycP71A==
+  /csstype/3.0.5:
+    dev: false
+    resolution:
+      integrity: sha512-uVDi8LpBUKQj6sdxNaTetL6FpeCqTjOvAQuQUa/qAqq8oOd4ivkbhgnqayl0dnPal8Tb/yB1tF+gOvCBiicaiQ==
   /cyclist/1.0.1:
     dev: false
     resolution:
@@ -4265,6 +4270,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-gd3ypIPfOMr9h5jIKq8E3sHOTCjeirnl0WK5ZdS1AW0Odt0b1PaWaHdJ4Qk4klv+YB9aJBS7mESXjFoDQPu6DA==
+  /dom-helpers/5.2.0:
+    dependencies:
+      '@babel/runtime': 7.12.5
+      csstype: 3.0.5
+    dev: false
+    resolution:
+      integrity: sha512-Ru5o9+V8CpunKnz5LGgWXkmrH/20cGKwcHwS4m73zIvs54CN9epEmT/HLqFJW3kXpakAFkEdzgy1hzlJe3E4OQ==
   /dom-serializer/0.2.2:
     dependencies:
       domelementtype: 2.0.2
@@ -9612,6 +9624,20 @@ packages:
         optional: true
     resolution:
       integrity: sha512-icJ/ctwV5XwITUOupBP9TUVGdWOqqZ0H08tbJ1kVC5VpNWYzEZ3e/x8axhV15ZXRsixLo27snwQE7B6Zd9J2Tg==
+  /react-transition-group/4.4.1_react-dom@17.0.1+react@17.0.1:
+    dependencies:
+      '@babel/runtime': 7.12.5
+      dom-helpers: 5.2.0
+      loose-envify: 1.4.0
+      prop-types: 15.7.2
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
+    dev: false
+    peerDependencies:
+      react: '>=16.6.0'
+      react-dom: '>=16.6.0'
+    resolution:
+      integrity: sha512-Djqr7OQ2aPUiYurhPalTrVy9ddmFCCzwhqQmtN+J3+3DzLO209Fdr70QrN8Z3DsglWql6iY1lDWAfpFiBtuKGw==
   /react/17.0.1:
     dependencies:
       loose-envify: 1.4.0
@@ -12113,3 +12139,4 @@ specifiers:
   react-dom: ^17.0.1
   react-refresh: ^0.9.0
   react-scripts: ^4.0.0
+  react-transition-group: ^4.4.1
