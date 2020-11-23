@@ -1,21 +1,19 @@
 import React from 'react';
 
-import './IngredientList.css';
+import styles from './IngredientList.module.scss';
 
-const IngredientList = props => {
-    return (
-        <section className="ingredient-list">
-            <h2>Loaded Ingredients</h2>
-            <ul>
-                {props.ingredients.map(ig => (
-                    <li key={ig.id} onClick={props.onRemoveItem.bind(this, ig.id)}>
-                        <span>{ig.title}</span>
-                        <span>{ig.amount}x</span>
-                    </li>
-                ))}
-            </ul>
-        </section>
-    );
-};
+const IngredientList = ( { ingredients, onRemoveItem } ) => (
+    <section className={styles.ingredientList}>
+        <h2>Loaded Ingredients</h2>
+        <ul>
+            {ingredients.map(( { amount, id, title } ) => (
+                <li key={id} onClick={onRemoveItem.bind(this, id)}>
+                    <span>{title}</span>
+                    <span>{amount}x</span>
+                </li>
+            ))}
+        </ul>
+    </section>
+);
 
 export default IngredientList;

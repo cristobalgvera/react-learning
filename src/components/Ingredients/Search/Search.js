@@ -1,19 +1,17 @@
 import React, { memo } from 'react';
 
 import Card from '../../UI/Card/Card';
-import './Search.css';
+import styles from './Search.module.scss';
 
-const Search = memo(props => {
-    return (
-        <section className="search">
-            <Card>
-                <div className="search-input">
-                    <label>Filter by Title</label>
-                    <input type="text"/>
-                </div>
-            </Card>
-        </section>
-    );
-});
+const Search = memo(() => (
+    <section className={styles.search}>
+        <Card>
+            <div className={styles.searchInput}>
+                <label>Filter by Title</label>
+                <input type="text"/>
+            </div>
+        </Card>
+    </section>
+));
 
 export default Search;

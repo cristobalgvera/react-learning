@@ -1,14 +1,14 @@
 import React from 'react';
 
 import Card from '../../components/UI/Card/Card';
-import './Auth.css';
+import styles from './Auth.module.scss';
 
-const Auth = props => {
+const Auth = () => {
     const loginHandler = () => {
     };
 
     return (
-        <div className="auth">
+        <div className={styles.auth}>
             <Card>
                 <h2>You are not authenticated!</h2>
                 <p>Please log in to continue.</p>
