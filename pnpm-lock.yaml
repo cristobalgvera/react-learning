@@ -1,7 +1,7 @@
 dependencies:
-  '@testing-library/jest-dom': 5.11.5
-  '@testing-library/react': 11.1.0_react-dom@17.0.1+react@17.0.1
-  '@testing-library/user-event': 12.1.10
+  '@testing-library/jest-dom': 5.11.6
+  '@testing-library/react': 11.2.2_react-dom@17.0.1+react@17.0.1
+  '@testing-library/user-event': 12.2.2
   axios: 0.21.0
   node-sass: 4.14.1
   prop-types: 15.7.2
@@ -12,8 +12,7 @@ dependencies:
   react-scripts: 4.0.0_node-sass@4.14.1
   redux: 4.0.5
   redux-saga: 1.1.3
-  redux-thunk: 2.3.0
-  web-vitals: 0.2.4
+  web-vitals: 1.0.1
 devDependencies:
   '@wojtekmaj/enzyme-adapter-react-17': 0.3.1_ed988ebff08079c40ff9e87e2acc78b3
   enzyme: 3.11.0
@@ -1515,7 +1514,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.3
       '@types/istanbul-reports': 3.0.0
-      '@types/node': 14.14.5
+      '@types/node': 14.14.9
       '@types/yargs': 15.0.9
       chalk: 4.1.0
     dev: false
@@ -1523,6 +1522,18 @@ packages:
       node: '>= 10.14.2'
     resolution:
       integrity: sha512-ywHavIKNpAVrStiRY5wiyehvcktpijpItvGiK72RAn5ctqmzvPk8OvKnvHeBqa1XdQr959CTWAJMqxI8BTibyg==
+  /@jest/types/26.6.2:
+    dependencies:
+      '@types/istanbul-lib-coverage': 2.0.3
+      '@types/istanbul-reports': 3.0.0
+      '@types/node': 14.14.9
+      '@types/yargs': 15.0.9
+      chalk: 4.1.0
+    dev: false
+    engines:
+      node: '>= 10.14.2'
+    resolution:
+      integrity: sha512-fC6QCp7Sc5sX6g8Tvbmj4XUTbyrik0akgRy03yjXbQaBWWNWGE7SGtJk98m0N8nzegD/7SggrUlivxo5ax4KWQ==
   /@nodelib/fs.scandir/2.1.3:
     dependencies:
       '@nodelib/fs.stat': 2.0.3
@@ -1825,24 +1836,24 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-LjepnS/BSAvelnOnnzr6Gg0GcpLmnZ9ThGFK5WJtm1xOqdBE/1IACZU7MMdVzjyUkfFqGz87eRE4hFaSLiUwYg==
-  /@testing-library/dom/7.26.3:
+  /@testing-library/dom/7.28.1:
     dependencies:
       '@babel/code-frame': 7.10.4
-      '@babel/runtime': 7.12.1
+      '@babel/runtime': 7.12.5
       '@types/aria-query': 4.2.0
       aria-query: 4.2.2
       chalk: 4.1.0
       dom-accessibility-api: 0.5.4
       lz-string: 1.4.4
-      pretty-format: 26.6.1
+      pretty-format: 26.6.2
     dev: false
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-/1P6taENE/H12TofJaS3L1J28HnXx8ZFhc338+XPR5y1E3g5ttOgu86DsGnV9/n2iPrfJQVUZ8eiGYZGSxculw==
-  /@testing-library/jest-dom/5.11.5:
+      integrity: sha512-acv3l6kDwZkQif/YqJjstT3ks5aaI33uxGNVIQmdKzbZ2eMKgg3EV2tB84GDdc72k3Kjhl6mO8yUt6StVIdRDg==
+  /@testing-library/jest-dom/5.11.6:
     dependencies:
-      '@babel/runtime': 7.12.1
+      '@babel/runtime': 7.12.5
       '@types/testing-library__jest-dom': 5.9.5
       aria-query: 4.2.2
       chalk: 3.0.0
@@ -1856,11 +1867,11 @@ packages:
       npm: '>=6'
       yarn: '>=1'
     resolution:
-      integrity: sha512-XI+ClHR864i6p2kRCEyhvpVejuer+ObVUF4cjCvRSF88eOMIfqw7RoS9+qoRhyigGswMfT64L6Nt0Ufotxbwtg==
-  /@testing-library/react/11.1.0_react-dom@17.0.1+react@17.0.1:
+      integrity: sha512-cVZyUNRWwUKI0++yepYpYX7uhrP398I+tGz4zOlLVlUYnZS+Svuxv4fwLeCIy7TnBYKXUaOlQr3vopxL8ZfEnA==
+  /@testing-library/react/11.2.2_react-dom@17.0.1+react@17.0.1:
     dependencies:
-      '@babel/runtime': 7.12.1
-      '@testing-library/dom': 7.26.3
+      '@babel/runtime': 7.12.5
+      '@testing-library/dom': 7.28.1
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
     dev: false
@@ -1870,10 +1881,10 @@ packages:
       react: '*'
       react-dom: '*'
     resolution:
-      integrity: sha512-Nfz58jGzW0tgg3irmTB7sa02JLkLnCk+QN3XG6WiaGQYb0Qc4Ok00aujgjdxlIQWZHbb4Zj5ZOIeE9yKFSs4sA==
-  /@testing-library/user-event/12.1.10:
+      integrity: sha512-jaxm0hwUjv+hzC+UFEywic7buDC9JQ1q3cDsrWVSDAPmLotfA6E6kUHlYm/zOeGCac6g48DR36tFHxl7Zb+N5A==
+  /@testing-library/user-event/12.2.2:
     dependencies:
-      '@babel/runtime': 7.12.1
+      '@babel/runtime': 7.12.5
     dev: false
     engines:
       node: '>=10'
@@ -1881,7 +1892,7 @@ packages:
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
     resolution:
-      integrity: sha512-StlNdKHp2Rpb7yrny/5/CGpz8bR3jLa1Ge59ODGU6TmAhkrxSpvR6tCD1gaMFkkjEUWkmmye8BaXsZPcaiJ6Ug==
+      integrity: sha512-mTYL9LrwiSeyorStUOMuRGQDn1ca40tIhuv//o/K3lY8wBEp+9Im90MFVx5i3u7zCPmavn3uWZs/10chsbI8Tg==
   /@types/anymatch/1.3.1:
     dev: false
     resolution:
@@ -2001,7 +2012,6 @@ packages:
     resolution:
       integrity: sha512-H5Wn24s/ZOukBmDn03nnGTp18A60ny9AmCwnEcgJiTgSGsCO7k+NWP7zjCCbhlcnVCoI+co52dUAt9GMhOSULw==
   /@types/node/14.14.9:
-    dev: true
     resolution:
       integrity: sha512-JsoLXFppG62tWTklIoO4knA+oDTYsmqWxHRvd4lpmfQRNhX6osheUOWETP2jMoV/2bEHuMra8Pp3Dmo/stBFcw==
   /@types/normalize-package-data/2.4.0:
@@ -2613,7 +2623,7 @@ packages:
       integrity: sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==
   /aria-query/4.2.2:
     dependencies:
-      '@babel/runtime': 7.12.1
+      '@babel/runtime': 7.12.5
       '@babel/runtime-corejs3': 7.12.1
     dev: false
     engines:
@@ -10383,6 +10393,17 @@ packages:
       node: '>= 10'
     resolution:
       integrity: sha512-MeqqsP5PYcRBbGMvwzsyBdmAJ4EFX7pWFyl7x4+dMVg5pE0ZDdBIvEH2ergvIO+Gvwv1wh64YuOY9y5LuyY/GA==
+  /pretty-format/26.6.2:
+    dependencies:
+      '@jest/types': 26.6.2
+      ansi-regex: 5.0.0
+      ansi-styles: 4.3.0
+      react-is: 17.0.1
+    dev: false
+    engines:
+      node: '>= 10'
+    resolution:
+      integrity: sha512-7AeGuCYNGmycyQbCqd/3PWH4eOoX/OiCa0uphp57NVTeAGdJGaAliecxwBDHYQCIvrW7aDBZCYeNTP/WX69mkg==
   /process-nextick-args/2.0.1:
     dev: false
     resolution:
@@ -10963,10 +10984,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-RkSn/z0mwaSa5/xH/hQLo8gNf4tlvT18qXDNvedihLcfzh+jMchDgaariQoehCpgRltEm4zHKJyINEz6aqswTw==
-  /redux-thunk/2.3.0:
-    dev: false
-    resolution:
-      integrity: sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
   /redux/4.0.5:
     dependencies:
       loose-envify: 1.4.0
@@ -13191,10 +13208,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-O84QOnr0icsbFGLS0O3bI5FswxzRr8/gHwWkDlQFskhSPryQXvrTMxjxGP4+iWYoauLoBvfDpkrOauZ+0iZpDA==
-  /web-vitals/0.2.4:
+  /web-vitals/1.0.1:
     dev: false
     resolution:
-      integrity: sha512-6BjspCO9VriYy12z356nL6JBS0GYeEcA457YyRzD+dD6XYCQ75NKhcOHUMHentOE7OcVCIXXDvOm0jKFfQG2Gg==
+      integrity: sha512-io/H/D18edTL1D2lcaUTLNLFEVZIPhNd4IdXDB9bEb+uDv2m/6NfyHiXKLFjbmI1ubeYpoQpR1gl9nlcWdI0vA==
   /webidl-conversions/5.0.0:
     dev: false
     engines:
@@ -13727,9 +13744,9 @@ packages:
     resolution:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
 specifiers:
-  '@testing-library/jest-dom': ^5.11.5
-  '@testing-library/react': ^11.1.0
-  '@testing-library/user-event': ^12.1.10
+  '@testing-library/jest-dom': ^5.11.6
+  '@testing-library/react': ^11.2.2
+  '@testing-library/user-event': ^12.2.2
   '@wojtekmaj/enzyme-adapter-react-17': ^0.3.1
   axios: ^0.21.0
   enzyme: ^3.11.0
@@ -13744,7 +13761,6 @@ specifiers:
   react-test-renderer: ^17.0.1
   redux: ^4.0.5
   redux-saga: ^1.1.3
-  redux-thunk: ^2.3.0
   stylelint: 13.8.0
   stylelint-config-recommended: ^3.0.0
-  web-vitals: ^0.2.4
+  web-vitals: ^1.0.1

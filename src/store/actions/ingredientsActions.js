@@ -1,37 +1,36 @@
 import { INGREDIENTS_ACTIONS } from './actionTypes';
-import axios from '../../services/axios-orders';
 
 const {
-    ADD_INGREDIENT,
-    REMOVE_INGREDIENT,
-    FETCH_INGREDIENTS_FAIL,
-    SET_INGREDIENTS,
+    INGREDIENT_ADD,
+    INGREDIENT_REMOVE,
+    INGREDIENTS_FETCH_FAIL,
+    INGREDIENTS_SET,
+    INGREDIENTS_INIT_FETCH,
 } = INGREDIENTS_ACTIONS;
 
 const addIngredient = ( ingredient ) => ({
-    type: ADD_INGREDIENT,
+    type: INGREDIENT_ADD,
     payload: { ingredient: ingredient },
 });
 
 const removeIngredient = ( ingredient ) => ({
-    type: REMOVE_INGREDIENT,
+    type: INGREDIENT_REMOVE,
     payload: { ingredient: ingredient },
 });
 
 const resetIngredients = () => initIngredients();
 
 const setIngredients = ( ingredients ) => ({
-    type: SET_INGREDIENTS,
+    type: INGREDIENTS_SET,
     payload: { ingredients: ingredients },
 });
 
-const fetchIngredientsFailed = () => ({ type: FETCH_INGREDIENTS_FAIL });
+const fetchIngredientsFailed = () => ({ type: INGREDIENTS_FETCH_FAIL });
 
-const initIngredients = () => ( dispatch ) => {
-    axios
-        .get('/ingredients.json')
-        .then(( { data: ingredients } ) => dispatch(setIngredients(ingredients)))
-        .catch(() => dispatch(fetchIngredientsFailed()));
-};
+const initIngredients = () => ({ type: INGREDIENTS_INIT_FETCH });
 
 export { addIngredient, removeIngredient, resetIngredients, initIngredients };
+export const ingredientsActionsSagas = {
+    setIngredients,
+    fetchIngredientsFailed,
+};

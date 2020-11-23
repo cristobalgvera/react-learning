@@ -1,7 +1,7 @@
 import { PRICE_ACTIONS } from "../actions/actionTypes";
 import { updateState } from "../../shared/utility";
 
-const { CALCULATE_PRICE, RESET_PRICE } = PRICE_ACTIONS;
+const { PRICE_CALCULATE, PRICE_RESET } = PRICE_ACTIONS;
 
 const initialState = {
   price: 2000,
@@ -16,9 +16,9 @@ const PRICES = {
 
 const priceReducer = (state = initialState, { payload, type }) => {
   switch (type) {
-    case CALCULATE_PRICE:
+    case PRICE_CALCULATE:
       return calculatePrice(state, payload);
-    case RESET_PRICE:
+    case PRICE_RESET:
       return updateState(state, { price: initialState.price });
     default:
       return state;

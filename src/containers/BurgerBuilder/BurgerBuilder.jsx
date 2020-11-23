@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../../services/axios-orders';
+import axios from '../../services/axiosInstance';
 import { connect } from 'react-redux';
 
 import Burger from '../../components/Burger/Burger';

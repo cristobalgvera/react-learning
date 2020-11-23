@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { NavigationItems as NavigationItemsStyle } from './NavigationItems.module.scss';
 import NavigationItem from './NavigationItem/NavigationItem';
 import { connect } from 'react-redux';
-import { handleAuthenticationLogout } from '../../../store/actions';
+import { authenticationLogout } from '../../../store/actions';
 import {
     BURGER_BUILDER,
     ORDERS,
@@ -48,7 +48,7 @@ const mapStateToProps = ( { authReducer: { localId } } ) => ({
 
 const mapDispatchToProps = ( dispatch ) => ({
     reduxActions: {
-        onLogout: () => dispatch(handleAuthenticationLogout()),
+        onLogout: () => dispatch(authenticationLogout()),
     },
 });
 

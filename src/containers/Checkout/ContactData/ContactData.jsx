@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import axios from '../../../services/axios-orders';
+import axios from '../../../services/axiosInstance';
 import Button from '../../../components/UI/Button/Button';
 
 import { ContactData as ContactDataStyle } from './ContactData.module.scss';

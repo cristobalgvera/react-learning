@@ -2,10 +2,10 @@ import { INGREDIENTS_ACTIONS } from '../actions/actionTypes';
 import { updateState } from '../../shared/utility';
 
 const {
-    ADD_INGREDIENT,
-    REMOVE_INGREDIENT,
-    FETCH_INGREDIENTS_FAIL,
-    SET_INGREDIENTS,
+    INGREDIENT_ADD,
+    INGREDIENT_REMOVE,
+    INGREDIENTS_FETCH_FAIL,
+    INGREDIENTS_SET,
 } = INGREDIENTS_ACTIONS;
 
 const initialState = {
@@ -15,13 +15,13 @@ const initialState = {
 
 const ingredientsReducer = ( state = initialState, { payload, type } ) => {
     switch (type) {
-        case ADD_INGREDIENT:
+        case INGREDIENT_ADD:
             return addIngredient(state, payload);
-        case REMOVE_INGREDIENT:
+        case INGREDIENT_REMOVE:
             return removeIngredient(state, payload);
-        case SET_INGREDIENTS:
+        case INGREDIENTS_SET:
             return setIngredients(state, payload);
-        case FETCH_INGREDIENTS_FAIL:
+        case INGREDIENTS_FETCH_FAIL:
             return updateState(state, { error: true });
         default:
             return state;

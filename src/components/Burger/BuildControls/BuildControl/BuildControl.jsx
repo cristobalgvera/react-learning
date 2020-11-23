@@ -16,7 +16,7 @@ import {
   Label,
 } from "./BuildControl.module.scss";
 
-const { ADD_INGREDIENT, REMOVE_INGREDIENT } = INGREDIENTS_ACTIONS;
+const { INGREDIENT_ADD, INGREDIENT_REMOVE } = INGREDIENTS_ACTIONS;
 
 const BuildControl = ({
   label,
@@ -28,11 +28,11 @@ const BuildControl = ({
 
   const onClickHandler = (type) => {
     switch (type) {
-      case ADD_INGREDIENT:
+      case INGREDIENT_ADD:
         onAddIngredient(ingredient);
         updatePrice(ingredient, 1);
         break;
-      case REMOVE_INGREDIENT:
+      case INGREDIENT_REMOVE:
         onRemoveIngredient(ingredient);
         updatePrice(ingredient, -1);
         break;
@@ -47,11 +47,11 @@ const BuildControl = ({
       <button
         className={Less}
         disabled={disabledInfo[ingredient]}
-        onClick={() => onClickHandler(REMOVE_INGREDIENT)}
+        onClick={() => onClickHandler(INGREDIENT_REMOVE)}
       >
         Less
       </button>
-      <button className={More} onClick={() => onClickHandler(ADD_INGREDIENT)}>
+      <button className={More} onClick={() => onClickHandler(INGREDIENT_ADD)}>
         More
       </button>
     </div>

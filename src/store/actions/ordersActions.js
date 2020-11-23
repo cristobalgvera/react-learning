@@ -1,24 +1,25 @@
 import { ORDERS_ACTIONS } from './actionTypes';
-import axios from '../../services/axios-orders';
 
-const { FETCH_ORDERS_FAIL, SET_ORDERS } = ORDERS_ACTIONS;
+const {
+    ORDERS_FETCH_FAIL,
+    ORDERS_SET,
+    ORDERS_INIT_FETCH,
+} = ORDERS_ACTIONS;
 
 const setOrders = ( orders ) => ({
-    type: SET_ORDERS,
-    payload: { orders: orders },
+    type: ORDERS_SET,
+    payload: { orders },
 });
 
-const fetchOrdersFailed = () => ({ type: FETCH_ORDERS_FAIL });
+const fetchOrdersFailed = () => ({ type: ORDERS_FETCH_FAIL });
 
-const initOrders = ( idToken, localId ) => ( dispatch ) => {
-    const queryParams = `?auth=${idToken}&orderBy="localId"&equalTo="${localId}"`;
-    axios.get(`/orders.json${queryParams}`)
-        .then(( { data: orders } ) => {
-            const _orders = [];
-            for (let order in orders) _orders.push({ ...orders[order], id: order });
-            dispatch(setOrders(_orders));
-        })
-        .catch(( error ) => dispatch(fetchOrdersFailed()));
-};
+const initOrders = ( idToken, localId ) => ({
+    type: ORDERS_INIT_FETCH,
+    payload: { idToken, localId },
+});
 
 export { initOrders };
+export const ordersActionsSagas = {
+    setOrders,
+    fetchOrdersFailed,
+};

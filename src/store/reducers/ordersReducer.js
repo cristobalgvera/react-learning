@@ -1,7 +1,7 @@
 import { ORDERS_ACTIONS } from "../actions/actionTypes";
 import { updateState } from "../../shared/utility";
 
-const { FETCH_ORDERS_FAIL, SET_ORDERS } = ORDERS_ACTIONS;
+const { ORDERS_FETCH_FAIL, ORDERS_SET } = ORDERS_ACTIONS;
 
 const initialState = {
   orders: null,
@@ -10,9 +10,9 @@ const initialState = {
 
 const ordersReducer = (state = initialState, { payload, type }) => {
   switch (type) {
-    case SET_ORDERS:
+    case ORDERS_SET:
       return updateState(state, { ...initialState, orders: payload.orders });
-    case FETCH_ORDERS_FAIL:
+    case ORDERS_FETCH_FAIL:
       return updateState(state, { ...initialState, error: true });
     default:
       return state;
