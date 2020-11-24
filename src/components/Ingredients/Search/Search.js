@@ -1,13 +1,22 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
-
 import Card from '../../UI/Card/Card';
+import LoadingIndicator from '../../UI/LoadingIndicator/LoadingIndicator';
+import ErrorModal from '../../UI/ErrorModal/ErrorModal';
 import styles from './Search.module.scss';
+import { firebaseUrl } from '../../../common/constants';
 import { updateState } from '../../../common/updateState';
-import { ingredientsUrl } from '../../../common/constants';
+import useHttp, { HTTP_METHODS } from '../../../hooks/http';
 
-const Search = memo(( { onLoadIngredients } ) => {
+const { GET } = HTTP_METHODS;
+
+const Search = memo(( { setIngredients } ) => {
         const [filter, setFilter] = useState('');
         const inputRef = useRef();
+
+        const {
+            data: { loading, data, error },
+            calls: { sendRequest, clearRequest },
+        } = useHttp();
 
         useEffect(() => {
             const timer = setTimeout(() => {
@@ -15,20 +24,21 @@ const Search = memo(( { onLoadIngredients } ) => {
                     const queryParameters = filter.length === 0
                         ? ''
                         : `?orderBy="title"&equalTo="${filter}"`;
-
-                    fetch(ingredientsUrl + queryParameters)
-                        .then(response => response.json())
-                        .then(ingredients => {
-                            const _ingredients = [];
-                            for (let key in ingredients) _ingredients.push(updateState(ingredients[key], { id: key }));
-                            onLoadIngredients(_ingredients);
-                        })
-                        .catch(error => console.error(error));
+                    sendRequest(`${firebaseUrl}/ingredients.json${queryParameters}`, GET);
                 }
             }, 300);
 
             return () => clearTimeout(timer);
-        }, [filter, onLoadIngredients, inputRef]);
+        }, [filter, inputRef, sendRequest]);
+
+        useEffect(() => {
+            if (!error) {
+                const _ingredients = [];
+                for (let key in data) if (data.hasOwnProperty(key))
+                    _ingredients.push(updateState(data[key], { id: key }));
+                setIngredients(_ingredients);
+            }
+        }, [data, error, setIngredients]);
 
         const handleFilterChange = ( { target: { value } } ) => {
             setFilter(value);
@@ -36,9 +46,11 @@ const Search = memo(( { onLoadIngredients } ) => {
 
         return (
             <section className={styles.search}>
+                {error && <ErrorModal onClose={clearRequest}>{error}</ErrorModal>}
                 <Card>
                     <div className={styles.searchInput}>
                         <label>Filter by Title</label>
+                        {loading && <LoadingIndicator/>}
                         <input
                             ref={inputRef}
                             type="text"

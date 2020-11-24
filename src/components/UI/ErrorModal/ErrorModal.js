@@ -8,7 +8,7 @@ const ErrorModal = memo(( { children, onClose } ) => (
         <div className={styles.errorModal}>
             <h2>An Error Occurred!</h2>
             <p>{children}</p>
-            <div className={styles.errorModal__actions}>
+            <div className={styles.errorModalActions}>
                 <button type="button" onClick={onClose}>
                     Okay
                 </button>

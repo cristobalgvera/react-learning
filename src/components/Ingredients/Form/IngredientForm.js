@@ -3,8 +3,9 @@ import React, { memo, useState } from 'react';
 import Card from '../../UI/Card/Card';
 import styles from './IngredientForm.module.scss';
 import { updateState } from '../../../common/updateState';
+import LoadingIndicator from '../../UI/LoadingIndicator/LoadingIndicator';
 
-const IngredientForm = memo(( { addIngredient } ) => {
+const IngredientForm = memo(( { addIngredient, loading } ) => {
     const initialState = { title: '', amount: 0 };
 
     const [ingredient, setIngredient] = useState(initialState);
@@ -41,6 +42,7 @@ const IngredientForm = memo(( { addIngredient } ) => {
                             id="amount"
                             name={'amount'}
                             value={amount}
+                            min={0}
                             onChange={handleChange}
                         />
                     </div>
@@ -51,6 +53,7 @@ const IngredientForm = memo(( { addIngredient } ) => {
                         >
                             Add Ingredient
                         </button>
+                        {loading && <LoadingIndicator/>}
                     </div>
                 </form>
             </Card>

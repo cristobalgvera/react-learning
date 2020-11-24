@@ -1,45 +1,80 @@
-import React, { useCallback, useEffect, useState } from 'react';
-
+import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
 import IngredientForm from './Form/IngredientForm';
 import Search from './Search/Search';
+import ErrorModal from '../UI/ErrorModal/ErrorModal';
 import IngredientList from './List/IngredientList';
+import { firebaseUrl } from '../../common/constants';
+import { INGREDIENTS_ACTIONS } from '../../store/actions/actionTypes';
+import { ingredientsActions } from '../../store/actions/index';
+import ingredientsReducer, { initialIngredientsState } from '../../store/reducers/ingredientsReducer';
 import { updateState } from '../../common/updateState';
-import { ingredientsUrl } from '../../common/constants';
+import useHttp, { HTTP_METHODS } from '../../hooks/http';
+
+const { setIngredients, removeIngredient, addIngredient } = ingredientsActions;
+const { DELETE, POST } = HTTP_METHODS;
+const { INGREDIENT_ADD, INGREDIENT_REMOVE } = INGREDIENTS_ACTIONS;
 
 const Ingredients = () => {
-    const [ingredients, setIngredients] = useState([]);
+    const [ingredients, dispatchIngredients] = useReducer(
+        ingredientsReducer,
+        initialIngredientsState,
+    );
 
-    const addIngredientHandler = async ( ingredient ) => {
-        try {
-            const response = await fetch(ingredientsUrl, {
-                method: 'POST',
-                body: JSON.stringify(ingredient),
-                headers: { 'Content-Type': 'application/json' },
-            });
-            const { name } = await response.json();
-            setIngredients(prevState => [...prevState, updateState(ingredient, { id: name })]);
-        } catch (error) {
-            console.error(error);
+    const {
+        data: { data, error, loading, extra, id },
+        calls: { sendRequest, clearRequest },
+    } = useHttp();
+
+    useEffect(() => {
+        if (!error) {
+            if (id === INGREDIENT_REMOVE)
+                dispatchIngredients(removeIngredient(extra));
+            else if (id === INGREDIENT_ADD)
+                dispatchIngredients(addIngredient(updateState(extra, { id: data.name })));
         }
-    };
+    }, [data, extra, id, error]);
 
-    const removeIngredientHandler = ( id ) => {
-        setIngredients(prevState => prevState.filter(ingredient => ingredient.id !== id));
-    };
+    const addIngredientHandler = useCallback(( ingredient ) => {
+        sendRequest(
+            `${firebaseUrl}/ingredients.json`,
+            POST,
+            JSON.stringify(ingredient),
+            ingredient,
+            INGREDIENT_ADD,
+        );
+    }, [sendRequest]);
 
-    const filteredIngredientsHandler = useCallback(( filteredIngredients ) => {
-        setIngredients(filteredIngredients);
+    const removeIngredientHandler = useCallback(( id ) => {
+        sendRequest(
+            `${firebaseUrl}/ingredients/${id}.json`,
+            DELETE,
+            null,
+            id,
+            INGREDIENT_REMOVE,
+        );
+    }, [sendRequest]);
+
+    const handleSetIngredients = useCallback(( ingredients ) => {
+        dispatchIngredients(setIngredients(ingredients));
     }, []);
+
+    const ingredientsList = useMemo(() => (
+        <IngredientList
+            ingredients={ingredients}
+            onRemoveItem={removeIngredientHandler}
+        />
+    ), [ingredients, removeIngredientHandler]);
 
     return (
         <div className="App">
-            <IngredientForm addIngredient={addIngredientHandler}/>
+            {error && <ErrorModal onClose={clearRequest}>{error}</ErrorModal>}
+            <IngredientForm
+                addIngredient={addIngredientHandler}
+                loading={loading}
+            />
             <section>
-                <Search onLoadIngredients={filteredIngredientsHandler}/>
-                <IngredientList
-                    ingredients={ingredients}
-                    onRemoveItem={removeIngredientHandler}
-                />
+                <Search setIngredients={handleSetIngredients}/>
+                {ingredientsList}
             </section>
         </div>
     );

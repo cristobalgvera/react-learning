@@ -1,1 +1,1 @@
-export const ingredientsUrl = 'https://react-hooks-learning-c82ed.firebaseio.com/ingredients.json';
+export const firebaseUrl = 'https://react-hooks-learning-c82ed.firebaseio.com';
