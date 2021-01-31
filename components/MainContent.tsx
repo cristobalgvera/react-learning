@@ -24,7 +24,7 @@ const recipes: Recipe[] = [
 
 export default function MainContent() {
   return (
-    <main className="px-16 py-6 bg-gray-100">
+    <main className="px-16 py-6 bg-gray-100 md:col-span-3">
       <div className="flex justify-center md:justify-end">
         <a href="#" className="text-primary">
           Log in
@@ -43,7 +43,7 @@ export default function MainContent() {
         <h4 className="font-bold mt-12 pb-2 border-b border-gray-200">
           Latest Recipes
         </h4>
-        <div className="mt-8 flex">
+        <div className="mt-8 grid gap-10 lg:grid-cols-3">
           {recipes.map((recipe, index) => (
             <RecipeCard key={`recipe-${index}`} {...recipe} />
           ))}
