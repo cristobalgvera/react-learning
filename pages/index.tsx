@@ -9,7 +9,7 @@ export default function Home() {
       </div>
 
       <main className="px-16 py-6">
-        <div className="flex justify-end">
+        <div className="flex justify-center md:justify-end">
           <a href="#" className="text-primary">Log in</a>
           <a href="#" className="text-primary ml-4">Sign up</a>
         </div>
