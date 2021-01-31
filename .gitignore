@@ -19,6 +19,7 @@
 .DS_Store
 *.pem
 **/.idea
+**/.nvimlog
 
 # debug
 npm-debug.log*
