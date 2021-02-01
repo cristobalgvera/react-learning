@@ -1,4 +1,4 @@
-import { Recipe } from "../interfaces/Recipe";
+import { IRecipe } from "../interfaces/IRecipe";
 
 // This approach can be used to extract 'logic' from class names
 // Also can be used directive @apply directly from TailwindCSS if you want
@@ -20,11 +20,11 @@ export default function RecipeCard({
   name,
   time,
   extraClasses,
-}: Recipe & IProps) {
+}: IRecipe & IProps) {
   return (
     <>
       <div
-        className={`bg-white rounded overflow-hidden shadow-md relative ${extraClasses}`}
+        className={`bg-white rounded overflow-hidden shadow-md relative ${extraClasses || ''}`}
       >
         <img
           src={imgUrl}

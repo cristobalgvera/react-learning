@@ -1,8 +1,8 @@
-import { Recipe } from "../interfaces/Recipe";
+import { IRecipe } from "../interfaces/IRecipe";
 import Button from "./common/Button";
 import RecipeCard from "./RecipeCard";
 
-const recipes: Recipe[] = [
+const recipes: IRecipe[] = [
   {
     name: "5 Bean Chili Stew",
     time: "25 mins",
