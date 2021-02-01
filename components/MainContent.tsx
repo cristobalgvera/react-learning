@@ -29,11 +29,11 @@ export default function MainContent() {
       <div className="flex justify-center md:justify-end">
         <Button
           message="Log in"
-          extraClasses="text-primary md:border-primary md:border-2"
+          extraClasses="text-primary md:border-primary md:border-2 hover:bg-primary hover:text-gray-100"
         />
         <Button
           message="Sign up"
-          extraClasses="text-primary ml-2 md:border-primary md:border-2"
+          extraClasses="text-primary ml-2 md:border-primary md:border-2 hover:bg-primary hover:text-gray-100"
         />
       </div>
 
@@ -48,19 +48,24 @@ export default function MainContent() {
         </h4>
         <div className="mt-8 grid gap-10 lg:grid-cols-3">
           {recipes.map((recipe, index) => (
-            <RecipeCard key={`recipe-${index}`} {...recipe} />
+            <RecipeCard
+              key={`recipe-${index}`}
+              extraClasses="hover:shadow-lg"
+              {...recipe}
+            />
           ))}
         </div>
 
         <h4 className="font-bold mt-12 pb-2 border-b border-gray-200">
           Most Popular
         </h4>
+        <div className="mt-8 grid gap-10 lg:grid-cols-3"></div>
       </div>
 
       <div className="flex justify-center">
         <Button
           message="Load more"
-          extraClasses="bg-secondary-100 text-secondary-200"
+          extraClasses="bg-secondary-100 text-secondary-200 hover:shadow-inner"
         />
       </div>
     </main>

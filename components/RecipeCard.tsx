@@ -10,10 +10,22 @@ const badge = `
   text-secondary-200 text-xs uppercase font-bold
 `;
 
-export default function RecipeCard({ author, imgUrl, name, time }: Recipe) {
+interface IProps {
+  extraClasses?: string;
+}
+
+export default function RecipeCard({
+  author,
+  imgUrl,
+  name,
+  time,
+  extraClasses,
+}: Recipe & IProps) {
   return (
     <>
-      <div className="bg-white rounded overflow-hidden shadow-md relative">
+      <div
+        className={`bg-white rounded overflow-hidden shadow-md relative ${extraClasses}`}
+      >
         <img
           src={imgUrl}
           alt={name}
