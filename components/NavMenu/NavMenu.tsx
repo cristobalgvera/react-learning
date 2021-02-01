@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { INavCategory } from "../../interfaces/INavCategory";
 import NavCategory from "./NavCategory";
 
@@ -35,19 +36,42 @@ const navCategories: NavCategories[] = [
 ];
 
 export default function NavMenu() {
+  const menuRef = useRef<HTMLUListElement>(null);
+
+  const handleClick = () => menuRef.current?.classList.toggle("hidden");
+
   return (
     <div className="md:col-span-1 md:flex md:justify-end">
       <nav className="text-right">
-        <div>
+        <div className="flex justify-between items-center">
           <h1 className="font-bold uppercase p-4 border-b border-gray-100">
             <a href="/" className="hover:text-gray-700">
               Food Ninja
             </a>
           </h1>
+          <div className="px-4 cursor-pointer md:hidden" onClick={handleClick}>
+            <svg
+              className="w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </div>
         </div>
-        <ul className="text-sm mt-6">
+        <ul className="text-sm hidden md:mt-6 md:block" ref={menuRef}>
           {navCategories.map(({ navCategory, liClass }, index) => (
-            <li key={`category-${index}`} className={`py-1 border-r-4 border-white ${liClass || ""}`}>
+            <li
+              key={`category-${index}`}
+              className={`py-1 border-r-4 border-white ${liClass || ""}`}
+            >
               <NavCategory {...navCategory} />
             </li>
           ))}
