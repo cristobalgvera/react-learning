@@ -1,5 +1,5 @@
 import { Recipe } from "../interfaces/Recipe";
-import Button from "./Button";
+import Button from "./common/Button";
 import RecipeCard from "./RecipeCard";
 
 const recipes: Recipe[] = [
@@ -31,7 +31,10 @@ export default function MainContent() {
           message="Log in"
           extraClasses="text-primary md:border-primary md:border-2"
         />
-        <Button message="Sign up" extraClasses="text-primary ml-2 md:border-primary md:border-2" />
+        <Button
+          message="Sign up"
+          extraClasses="text-primary ml-2 md:border-primary md:border-2"
+        />
       </div>
 
       <header>

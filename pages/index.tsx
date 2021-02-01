@@ -1,5 +1,5 @@
 import MainContent from "../components/MainContent";
-import NavMenu from "../components/NavMenu";
+import NavMenu from "../components/NavMenu/NavMenu";
 
 export default function Home() {
   return (
