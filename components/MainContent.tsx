@@ -23,17 +23,20 @@ const recipes: IRecipe[] = [
   },
 ];
 
+const loginClass =
+  "text-primary md:border-primary md:border-2 hover:bg-primary hover:text-gray-100 transition ease-out duration-300";
+
 export default function MainContent() {
   return (
     <main className="px-16 py-6 bg-gray-100 md:col-span-3">
       <div className="flex justify-center md:justify-end">
         <Button
           message="Log in"
-          extraClasses="text-primary md:border-primary md:border-2 hover:bg-primary hover:text-gray-100"
+          extraClasses={loginClass}
         />
         <Button
           message="Sign up"
-          extraClasses="text-primary ml-2 md:border-primary md:border-2 hover:bg-primary hover:text-gray-100"
+          extraClasses={`${loginClass} ml-2`}
         />
       </div>
 
@@ -65,7 +68,7 @@ export default function MainContent() {
       <div className="flex justify-center">
         <Button
           message="Load more"
-          extraClasses="bg-secondary-100 text-secondary-200 hover:shadow-inner"
+          extraClasses="bg-secondary-100 text-secondary-200 hover:shadow-inner transform hover:scale-110 hover:bg-opacity-50 transition ease-out duration-300"
         />
       </div>
     </main>
