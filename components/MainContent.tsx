@@ -1,4 +1,5 @@
 import { Recipe } from "../interfaces/Recipe";
+import Button from "./Button";
 import RecipeCard from "./RecipeCard";
 
 const recipes: Recipe[] = [
@@ -26,12 +27,11 @@ export default function MainContent() {
   return (
     <main className="px-16 py-6 bg-gray-100 md:col-span-3">
       <div className="flex justify-center md:justify-end">
-        <a href="#" className="text-primary">
-          Log in
-        </a>
-        <a href="#" className="text-primary ml-4">
-          Sign up
-        </a>
+        <Button
+          message="Log in"
+          extraClasses="text-primary md:border-primary md:border-2"
+        />
+        <Button message="Sign up" extraClasses="text-primary ml-2 md:border-primary md:border-2" />
       </div>
 
       <header>
@@ -55,7 +55,10 @@ export default function MainContent() {
       </div>
 
       <div className="flex justify-center">
-        <div className="bg-secondary-100 text-secondary-200">Load more</div>
+        <Button
+          message="Load more"
+          extraClasses="bg-secondary-100 text-secondary-200"
+        />
       </div>
     </main>
   );
